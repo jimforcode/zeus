@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zeus.model.User;
 import com.zeus.service.UserService;
 
 @Controller
@@ -15,10 +16,12 @@ import com.zeus.service.UserService;
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
-
+   
 	@RequestMapping("index")
 	public String demoIndex(Model model) {
-		model.addAttribute("name", "hi");
+		User user = this.userService.getUserById(1L);
+		model.addAttribute("name", user.getAlias());
+
 		return "index";
 	}
 
@@ -34,4 +37,11 @@ public class DemoController extends BaseController {
 		userService.getUserById(1L);
 		return "index";
 	}
+
+	@RequestMapping("login")
+	public String demoLoginx(Model model) {
+		model.addAttribute("name", "hi");
+		return "login";
+	}
+
 }

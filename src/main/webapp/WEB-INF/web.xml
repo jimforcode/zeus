@@ -9,11 +9,11 @@
 		<param-value>classpath:spring.xml,classpath:spring-mybatis.xml</param-value>
 	</context-param>
 	<filter>
-		<description>字符集过滤器</description>
+		<description>encodingFilter</description>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
 		<init-param>
-			<description>字符集编码</description>
+			<description>encodingFilter</description>
 			<param-name>encoding</param-name>
 			<param-value>UTF-8</param-value>
 		</init-param>
@@ -31,7 +31,6 @@
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
-	<!-- spring mvc servlet -->
 	<servlet>
 		<description>spring mvc servlet</description>
 		<servlet-name>springMvc</servlet-name>

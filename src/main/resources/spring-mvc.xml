@@ -7,7 +7,6 @@
 	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
-	<!-- 自动扫描controller包下的所有类，使其认为spring mvc的控制器 -->
 	<context:component-scan base-package="com.zeus.*" />
 
 	<mvc:resources mapping="/statis/**" location="/statis/" />
@@ -56,19 +55,27 @@
 				</beans:property>
 			</beans:bean>
 		</message-converters>
-		<!-- <mvc:argument-resolvers> <beans:bean class="com.zeus.common.annotation.resolver.WebLoginResolver"></beans:bean> 
-			<beans:bean class="com.zeus.common.annotation.resolver.AsynLoginResolver"></beans:bean> 
-			</mvc:argument-resolvers> -->
+		<!-- 开发阶段放开 
+		<mvc:argument-resolvers>
+			<beans:bean class="com.zeus.common.annotation.resolver.AsynLoginResolver"></beans:bean>
+		</mvc:argument-resolvers>
+		 -->
 	</annotation-driven>
 
-
-
-	<!--视图定义 -->
 	<beans:bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/view/" />
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 
+  <!-- 开发阶段放开
+	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/demo/login" />
+			<beans:bean class="com.zeus.common.interceptor.LoginInteceptor" />
+		</interceptor>
+	</interceptors>
+	 -->
 </beans:beans>
     

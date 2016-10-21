@@ -16,15 +16,15 @@ public class AsynLoginResolver implements HandlerMethodArgumentResolver {
 	public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer,
 			NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
 		boolean required = methodParameter.getParameterAnnotation(AsynLoginRequired.class) != null;
-		LoginUser sysUser = (LoginUser) nativeWebRequest.getAttribute("user", WebRequest.SCOPE_SESSION);
+		LoginUser loginUser = (LoginUser) nativeWebRequest.getAttribute("loginUser", WebRequest.SCOPE_SESSION);
 		if (required) {
-			if (sysUser == null) {
+			if (loginUser == null) {
 				throw new AsynLoginException();
 			} else {
-				return sysUser;
+				return loginUser;
 			}
 		}
-		return sysUser;
+		return loginUser;
 	}
 
 	public boolean supportsParameter(MethodParameter methodParameter) {

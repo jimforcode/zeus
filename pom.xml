@@ -139,6 +139,17 @@
 			<version>0.9.28</version>
 			<type>jar</type>
 		</dependency>
+
+		<!-- JMS 消息队列 start -->
+		<!-- <dependency> <groupId>javax.inject</groupId> <artifactId>javax.inject</artifactId> 
+			<version>1</version> </dependency> <dependency> <groupId>org.springframework</groupId> 
+			<artifactId>spring-jms</artifactId> <version>4.2.0.RELEASE</version> </dependency> -->
+		<!-- xbean 如<amq:connectionFactory /> <dependency> <groupId>org.apache.xbean</groupId> 
+			<artifactId>xbean-spring</artifactId> <version>3.16</version> </dependency> -->
+		<!-- activemq <dependency> <groupId>org.apache.activemq</groupId> <artifactId>activemq-core</artifactId> 
+			<version>5.7.0</version> </dependency> <dependency> <groupId>org.apache.activemq</groupId> 
+			<artifactId>activemq-pool</artifactId> <version>5.12.1</version> </dependency> -->
+		<!-- JMS 消息队列 end -->
 	</dependencies>
 
 	<build>
