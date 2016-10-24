@@ -22,7 +22,6 @@ public class DemoController extends BaseController {
 	public String demoIndex(Model model) {
 		User user = this.userService.getUserById(1L);
 		model.addAttribute("name", user.getAlias());
-
 		return "index";
 	}
 
@@ -30,6 +29,14 @@ public class DemoController extends BaseController {
 	@ResponseBody
 	public Map<String, Object> demoJson(Pagination page) {
 		return resultOK(this.userService.listUsers(page));
+	}
+
+	@RequestMapping("page")
+	public String demoPage(Pagination page, Model model) {
+		page.setTotal(100);
+		page.setCountPage(1);
+		model.addAttribute("page", page);
+		return "index";
 	}
 
 	@RequestMapping("data")
