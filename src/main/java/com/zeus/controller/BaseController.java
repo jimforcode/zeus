@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /***
- * ·â×°json·µ»ØÊý¾Ý
+ * ï¿½ï¿½×°jsonï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * 
  * @author zengjin
  *
@@ -22,7 +22,7 @@ public abstract class BaseController {
 	protected Map<String, Object> resultOK() {
 		HashMap<String, Object> messageOK;
 
-		messageOK = new HashMap<>();
+		messageOK = new HashMap<String, Object>();
 		messageOK.put(RESULT_KEY_STATUS, RESULT_STATUS_OK);
 		return messageOK;
 	}
@@ -30,7 +30,7 @@ public abstract class BaseController {
 	protected Map<String, Object> resultOK(Object obj) {
 		HashMap<String, Object> messageOK;
 
-		messageOK = new HashMap<>();
+		messageOK = new HashMap<String, Object>();
 		messageOK.put(RESULT_KEY_STATUS, RESULT_STATUS_OK);
 		messageOK.put(RESULT_KEY_RESULT, obj);
 		return messageOK;
@@ -39,7 +39,7 @@ public abstract class BaseController {
 	protected Map<String, Object> resultOK(String key, Object value) {
 		HashMap<String, Object> messageOK;
 
-		messageOK = new HashMap<>();
+		messageOK = new HashMap<String, Object>();
 		messageOK.put(RESULT_KEY_STATUS, RESULT_STATUS_OK);
 		messageOK.put(key, value);
 		return messageOK;
@@ -47,7 +47,7 @@ public abstract class BaseController {
 
 	protected Map<String, Object> resultError(String message) {
 		HashMap<String, Object> ret;
-		ret = new HashMap<>();
+		ret = new HashMap<String, Object>();
 		ret.put(RESULT_KEY_STATUS, RESULT_STATUS_ERROR);
 		ret.put(RESULT_KEY_MESSAGE, message);
 		return ret;
