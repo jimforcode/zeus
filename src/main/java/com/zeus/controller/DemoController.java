@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zeus.dto.Pagination;
 import com.zeus.model.User;
 import com.zeus.service.UserService;
 
@@ -16,19 +17,26 @@ import com.zeus.service.UserService;
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
-   
+
 	@RequestMapping("index")
 	public String demoIndex(Model model) {
 		User user = this.userService.getUserById(1L);
 		model.addAttribute("name", user.getAlias());
-
 		return "index";
 	}
 
 	@RequestMapping("json")
 	@ResponseBody
-	public Map<String, Object> demoJson() {
-		return resultOK();
+	public Map<String, Object> demoJson(Pagination page) {
+		return resultOK(this.userService.listUsers(page));
+	}
+
+	@RequestMapping("page")
+	public String demoPage(Pagination page, Model model) {
+		page.setTotal(100);
+		page.setCountPage(1);
+		model.addAttribute("page", page);
+		return "index";
 	}
 
 	@RequestMapping("data")
