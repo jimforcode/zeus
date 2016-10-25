@@ -35,7 +35,7 @@ public class DemoController extends BaseController {
 	public String demoPage(Pagination page, Model model) {
 		page.setTotal(100);
 		page.setCountPage(1);
-		model.addAttribute("page", page);
+		model.addAttribute("page", page.getFirstResult());
 		return "index";
 	}
 
