@@ -6,6 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>hi</title>
 </head>
-<body>well done!login page
+<body>well done!login page ${name}
 </body>
 </html>

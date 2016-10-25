@@ -2,12 +2,15 @@ package com.zeus.controller;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zeus.common.config.ApiCfg;
 import com.zeus.dto.Pagination;
 import com.zeus.model.User;
 import com.zeus.service.UserService;
@@ -17,6 +20,9 @@ import com.zeus.service.UserService;
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ApiCfg apiCfg;
 
 	@RequestMapping("index")
 	public String demoIndex(Model model) {
@@ -48,7 +54,7 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("login")
 	public String demoLoginx(Model model) {
-		model.addAttribute("name", "hi");
+		model.addAttribute("name", apiCfg.getName());
 		return "login";
 	}
 
