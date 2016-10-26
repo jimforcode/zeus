@@ -2,24 +2,27 @@ package com.zeus.controller;
 
 import java.util.Map;
 
-import javax.annotation.Resource;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zeus.common.config.ApiCfg;
 import com.zeus.dto.Pagination;
 import com.zeus.model.User;
 import com.zeus.service.UserService;
+import com.zeus.zabbix.ZabbixDemo;
 
 @Controller
 @RequestMapping("demo")
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private ZabbixDemo zabbixDemo;
 
 	@Autowired
 	private ApiCfg apiCfg;
@@ -58,4 +61,21 @@ public class DemoController extends BaseController {
 		return "login";
 	}
 
+	@RequestMapping("/api")
+	@ResponseBody
+	public Map<String, Object> testApi() {
+		return resultOK(zabbixDemo.demo());
+	}
+
+	@RequestMapping(value = "post", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<String, Object> methodPost(String name, String age) {
+		return resultOK(name);
+	}
+
+	@RequestMapping(value = "get")
+	@ResponseBody
+	public Map<String, Object> methodGet(String name, String age) {
+		return resultOK(name);
+	}
 }

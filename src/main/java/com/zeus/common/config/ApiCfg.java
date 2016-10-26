@@ -3,6 +3,12 @@ package com.zeus.common.config;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+/***
+ * ≈‰÷√Œƒº˛
+ * 
+ * @author zengjin
+ *
+ */
 @Component
 public class ApiCfg {
 	@Value("#{configProperties['name']}")
