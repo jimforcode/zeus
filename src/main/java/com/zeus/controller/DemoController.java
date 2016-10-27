@@ -13,7 +13,7 @@ import com.zeus.common.config.ApiCfg;
 import com.zeus.dto.Pagination;
 import com.zeus.model.User;
 import com.zeus.service.UserService;
-import com.zeus.zabbix.ZabbixDemo;
+import com.zeus.service.ZabbixService;
 
 @Controller
 @RequestMapping("demo")
@@ -22,7 +22,7 @@ public class DemoController extends BaseController {
 	private UserService userService;
 
 	@Autowired
-	private ZabbixDemo zabbixDemo;
+	private ZabbixService zabbixService;
 
 	@Autowired
 	private ApiCfg apiCfg;
@@ -46,6 +46,7 @@ public class DemoController extends BaseController {
 		page.setCountPage(1);
 		model.addAttribute("page", page.getFirstResult());
 		return "index";
+
 	}
 
 	@RequestMapping("data")
@@ -63,8 +64,8 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("/api")
 	@ResponseBody
-	public Map<String, Object> testApi() {
-		return resultOK(zabbixDemo.demo());
+	public Map<String, Object> testApi(String username, String pwd) {
+		return resultOK(zabbixService.auth(username, pwd));
 	}
 
 	@RequestMapping(value = "post", method = RequestMethod.POST)
