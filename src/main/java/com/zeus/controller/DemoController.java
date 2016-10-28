@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.zeus.common.config.ApiCfg;
 import com.zeus.dto.Pagination;
 import com.zeus.model.User;
@@ -20,7 +19,7 @@ import com.zeus.service.UserService;
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
-
+ 
 	@Autowired
 	private ApiCfg apiCfg;
 
@@ -41,6 +40,7 @@ public class DemoController extends BaseController {
 	public String demoPage(Pagination page, Model model) {
 		page.setTotal(100);
 		page.setCountPage(1);
+
 		model.addAttribute("page", page.getFirstResult());
 		return "index";
 	}
