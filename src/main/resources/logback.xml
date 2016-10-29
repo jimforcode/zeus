@@ -123,6 +123,11 @@
 	<logger name="com.zeus.zabbix" level="TRACE" additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
+   <logger name="io.github.hengyunabc.zabbix.api" level="TRACE" additivity="false">
+		<appender-ref ref="stdout" />
+	</logger>
+
+
 
 	<root level="info">
 		<appender-ref ref="stdout" />

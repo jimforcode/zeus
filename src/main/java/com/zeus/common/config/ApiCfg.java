@@ -4,33 +4,24 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /***
- * ÅäÖÃÎÄ¼þ
+ * ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
  * 
  * @author zengjin
  *
  */
 @Component
 public class ApiCfg {
-	@Value("#{configProperties['name']}")
-	private String name;
-	@Value("#{configProperties['zabbix.host']}")
-	private String zabbixHost;
+	@Value("#{configProperties['zabbix.auth.url']}")
+	private String zabbixAuthUrl;
+
+	public String getZabbixAuthUrl() {
+		return zabbixAuthUrl;
+	}
+
+	public void setZabbixAuthUrl(String zabbixAuthUrl) {
+		this.zabbixAuthUrl = zabbixAuthUrl;
+	}
+
 	
 	
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getZabbixHost() {
-		return zabbixHost;
-	}
-
-	public void setZabbixHost(String zabbixHost) {
-		this.zabbixHost = zabbixHost;
-	}
-
 }

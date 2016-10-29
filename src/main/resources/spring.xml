@@ -13,6 +13,12 @@
 		class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
 	<context:annotation-config />
 	<context:component-scan base-package="com.zeus" />
+    <context:component-scan base-package="io.github.hengyunabc.zabbix.api" />
+	
+    
+
+    
+ 
 	<beans:bean id="configProperties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<beans:property name="locations">
