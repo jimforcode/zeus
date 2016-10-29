@@ -78,7 +78,7 @@ public class DemoController extends BaseController {
 
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public Map<String, Object> methodGet(String[] auth) {
-		return resultOK(this.zabbixService.hostGet(auth));
+	public Map<String, Object> methodGet(String[] hosts) {
+		return resultOK(this.zabbixService.hostGet(hosts));
 	}
 }
