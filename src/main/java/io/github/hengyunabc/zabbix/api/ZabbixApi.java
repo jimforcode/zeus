@@ -14,5 +14,7 @@ public interface ZabbixApi {
 
 	boolean login(String user, String password);
 
+	
+	String getAuth();
  
 }
