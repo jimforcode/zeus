@@ -4,8 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /***
- * 封装json返回数据
- * 
+ *
  * @author zengjin
  *
  */

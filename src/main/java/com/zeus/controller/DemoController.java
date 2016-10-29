@@ -1,29 +1,26 @@
 package com.zeus.controller;
 
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zeus.model.User;
-import com.zeus.service.UserService;
+import java.util.Map;
 
 @Controller
-@RequestMapping("demo")
 public class DemoController extends BaseController {
-	@Autowired
-	private UserService userService;
-   
+
 	@RequestMapping("index")
 	public String demoIndex(Model model) {
-		User user = this.userService.getUserById(1L);
-		model.addAttribute("name", user.getAlias());
 
 		return "index";
 	}
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String mianIndex() {
+		return "index";
+	}
+
 
 	@RequestMapping("json")
 	@ResponseBody
@@ -33,8 +30,6 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("data")
 	public String demoData(Model model) {
-		model.addAttribute("name", "hi");
-		userService.getUserById(1L);
 		return "index";
 	}
 
