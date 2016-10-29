@@ -14,6 +14,8 @@ import com.zeus.model.User;
 import com.zeus.service.UserService;
 import com.zeus.service.ZabbixService;
 
+import io.github.hengyunabc.zabbix.api.ZabbixApi;
+
 @Controller
 @RequestMapping("demo")
 public class DemoController extends BaseController {
@@ -58,7 +60,7 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("login")
 	public String demoLoginx(Model model) {
-		model.addAttribute("name", apiCfg.getName());
+		model.addAttribute("name", apiCfg.getZabbixAuthUrl());
 		return "login";
 	}
 
@@ -76,7 +78,7 @@ public class DemoController extends BaseController {
 
 	@RequestMapping(value = "get")
 	@ResponseBody
-	public Map<String, Object> methodGet(String name, String age) {
-		return resultOK(name);
+	public Map<String, Object> methodGet(String[] hosts) {
+		return resultOK(this.zabbixService.hostGet(hosts));
 	}
 }
