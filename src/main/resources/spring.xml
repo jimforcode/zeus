@@ -15,7 +15,8 @@
     <context:annotation-config/>
     <context:component-scan base-package="com.zeus"/>
     <context:component-scan base-package="io.github.hengyunabc.zabbix.api"/>
-
+    <!-- AOP 使用注解方式 声明 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <beans:bean id="configProperties"
                 class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -30,6 +31,4 @@
                 class="org.springframework.beans.factory.config.PreferencesPlaceholderConfigurer">
         <beans:property name="properties" ref="configProperties"/>
     </beans:bean>
-    <!-- AOP 使用注解方式 声明 -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
 </beans:beans>

@@ -20,7 +20,6 @@ public class CpuMonitorServiceImpl implements CpuMonitorService {
 
     @Override
     public String getAuth(String user, String password) {
-        this.zabbixApi.init();
         Request request = RequestBuilder.newBuilder().paramEntry("user", user)
                 .paramEntry("password", password).method("user.login").build();
 
@@ -30,7 +29,6 @@ public class CpuMonitorServiceImpl implements CpuMonitorService {
 
     @Override
     public String getHostId(String hostName, String auth) {
-        this.zabbixApi.init();
 
         JSONObject filter = new JSONObject();
         filter.put("host", new String[]{hostName});
@@ -46,7 +44,6 @@ public class CpuMonitorServiceImpl implements CpuMonitorService {
 
     @Override
     public String getItemId(String hostId, String searchKey, String auth) {
-        this.zabbixApi.init();
 
         JSONObject filter = new JSONObject();
         filter.put("key_", new String[]{searchKey});
@@ -63,7 +60,6 @@ public class CpuMonitorServiceImpl implements CpuMonitorService {
 
     @Override
     public JSONArray getCpuMonitorInfo(String itemId, String timeFrom, String timeTill, String auth) {
-        this.zabbixApi.init();
 
         Request getRequest = RequestBuilder.newBuilder().paramEntry("history", "0")
                 .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")

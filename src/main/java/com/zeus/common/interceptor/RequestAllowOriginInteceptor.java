@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class RequestAllowOriginInteceptor {
-    @Pointcut("execution(* com.zeus.controller.CpuMonitorController.*(..))")
-    private void request() {
+    @Pointcut("execution(* com.zeus.service.CpuMonitorService.getHostId(..))")
+    private void beforeRequest() {
     }
 
-    @Before("request()")
+    @Before(value = "beforeRequest()")
     public void doAccessCheck(JoinPoint joint) {
         System.out.println(joint);
         System.out.println("前置通知");
