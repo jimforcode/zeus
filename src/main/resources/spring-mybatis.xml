@@ -101,6 +101,16 @@ http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
 		<aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />
 	</aop:config>
 
+	<bean id="springMethodInterceptor" class="com.zeus.common.interceptor.RequestAllowOriginInteceptor"  />
+	<aop:config>
+		<!--切入点-->
+		<aop:pointcut id="requestAllowOirginRequired"
+					  expression="execution(public * com.zeus.common.interceptor.*.*(..)) "/>
+		<!--在该切入点使用自定义拦截器-->
+		<aop:advisor pointcut-ref="requestAllowOirginRequired" advice-ref="springMethodInterceptor"/>
+	</aop:config>
+
+
 
 	<!-- 配置druid监控spring jdbc -->
 	<bean id="druid-stat-interceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor">

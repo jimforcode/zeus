@@ -1,7 +1,8 @@
 package com.zeus.service;
 
 public interface ZabbixService {
-	boolean auth(String username, String pwd);
 
-	Object hostGet(String[] host);
+    boolean isLogin(String userName, String passWord);
+
+    Object hostGet(String[] host);
 }
