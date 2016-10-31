@@ -25,10 +25,7 @@ public class MemoryMoitorController extends BaseController {
 
     @RequestMapping(value = "memoryInfo", method = RequestMethod.GET)
     @ResponseBody
-//    @RequestAllowOirginRequired
     public Map<String, Object> getMemoryInfo(HttpServletRequest request, HttpServletResponse response) {
-
-        setResopnseAllowOrigin(request, response);
 
         // 1.获取auth
         String auth = (String) request.getSession().getAttribute("auth");

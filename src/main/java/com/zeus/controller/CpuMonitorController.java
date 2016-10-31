@@ -1,6 +1,7 @@
 package com.zeus.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.zeus.common.annotation.login.RequestAllowOirginRequired;
 import com.zeus.common.utils.Constants;
 import com.zeus.service.CpuMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,8 @@ public class CpuMonitorController extends BaseController {
 
     @RequestMapping(value = "cpuInfo", method = RequestMethod.GET)
     @ResponseBody
-//    @RequestAllowOirginRequired
+    @RequestAllowOirginRequired
     public Map<String, Object> getCpuInfo(HttpServletRequest request, HttpServletResponse response) {
-
-        setResopnseAllowOrigin(request, response);
 
         // 1.获取auth
         String auth = (String) request.getSession().getAttribute("auth");
