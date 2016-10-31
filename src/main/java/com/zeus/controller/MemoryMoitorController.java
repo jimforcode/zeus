@@ -1,6 +1,7 @@
 package com.zeus.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.zeus.common.annotation.login.RequestAllowOirginRequired;
 import com.zeus.common.utils.Constants;
 import com.zeus.service.MemoryMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ public class MemoryMoitorController extends BaseController {
     MemoryMonitorService memoryMonitorService;
 
     @RequestMapping(value = "memoryInfo", method = RequestMethod.GET)
+    @RequestAllowOirginRequired
     @ResponseBody
     public Map<String, Object> getMemoryInfo(HttpServletRequest request, HttpServletResponse response) {
 
