@@ -164,5 +164,9 @@ public class DefaultZabbixApi implements ZabbixApi {
 		}
 	}
 
- 
+	@Override
+	public String getAuth() {
+		return this.auth;
+	}
+
 }
