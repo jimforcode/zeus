@@ -1,6 +1,7 @@
-package com.zeus.common.event;
+package com.zeus.common.listener;
 
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,9 +15,22 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ServletContextAware;
 
+import com.zeus.common.config.ApiCfg;
+
+import io.github.hengyunabc.zabbix.api.ZabbixApi;
+
 @Component
 public class StartupListener implements ApplicationContextAware, ServletContextAware, InitializingBean,
 		ApplicationListener<ContextRefreshedEvent> {
+
+	@Autowired
+	private ApiCfg apiCfg;
+
+	@Autowired
+	private ZabbixApi zabbixApi;
+
+	@Autowired
+	private HttpSession session;
 
 	private static Logger log = LoggerFactory.getLogger(StartupListener.class);
 
@@ -33,6 +47,12 @@ public class StartupListener implements ApplicationContextAware, ServletContextA
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		log.info("3 => StartupListener.afterPropertiesSet");
+		boolean login = zabbixApi.login(apiCfg.getZabbixUser(), apiCfg.getZabbixPassword());
+		if (login) {
+ 			log.trace("zabbix auth sucessfull......  authkey:{}", zabbixApi.getAuth());
+		} else {
+			log.trace("zabbix auth fail......");
+		}
 	}
 
 	@Override

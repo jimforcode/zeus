@@ -25,7 +25,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.zeus.common.config.ApiCfg;
 
 @Component
-@Scope("prototype")
+// @Scope("prototype")
 public class DefaultZabbixApi implements ZabbixApi {
 	private static final Logger logger = LoggerFactory.getLogger(DefaultZabbixApi.class);
 
@@ -47,7 +47,7 @@ public class DefaultZabbixApi implements ZabbixApi {
 
 	}
 
-	// 增加无参构造函数
+	// 澧炲姞鏃犲弬鏋勯�犲嚱鏁�
 	public DefaultZabbixApi() {
 		// TODO Auto-generated constructor stub
 	}
@@ -70,7 +70,7 @@ public class DefaultZabbixApi implements ZabbixApi {
 	@PostConstruct
 	public void init() {
 		try {
-			logger.trace("认证 url 传入：{}", this.apiCfg.getZabbixAuthUrl());
+			logger.trace("璁よ瘉 url 浼犲叆锛歿}", this.apiCfg.getZabbixAuthUrl());
 			uri = new URI(this.apiCfg.getZabbixAuthUrl());
 		} catch (URISyntaxException e) {
 			throw new RuntimeException("url invalid", e);

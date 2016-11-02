@@ -119,14 +119,18 @@
 	<logger name="com.zeus.service" level="TRACE" additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
-	
+
 	<logger name="com.zeus.zabbix" level="TRACE" additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
-   <logger name="io.github.hengyunabc.zabbix.api" level="TRACE" additivity="false">
+	<logger name="io.github.hengyunabc.zabbix.api" level="TRACE"
+		additivity="false">
 		<appender-ref ref="stdout" />
 	</logger>
-
+	<logger name="com.zeus.common.listener" level="TRACE"
+		additivity="false">
+		<appender-ref ref="stdout" />
+	</logger>
 
 
 	<root level="info">
