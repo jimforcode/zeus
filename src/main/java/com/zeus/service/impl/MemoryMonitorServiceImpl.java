@@ -2,7 +2,9 @@ package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zeus.service.CpuMonitorService;
+import com.zeus.common.constant.AgentConstants;
+import com.zeus.common.constant.DataTypeEnum;
+import com.zeus.common.constant.SnmpConstants;
 import com.zeus.service.MemoryMonitorService;
 import io.github.hengyunabc.zabbix.api.Request;
 import io.github.hengyunabc.zabbix.api.RequestBuilder;
@@ -14,26 +16,21 @@ import org.springframework.stereotype.Service;
  * 内存监控信息
  */
 @Service
-public class MemoryMonitorServiceImpl implements MemoryMonitorService {
+public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryMonitorService {
 
     @Autowired
     private ZabbixApi zabbixApi;
-    @Autowired
-    private CpuMonitorService cpuMonitorService;
 
     @Override
-    public String getAuth(String user, String password) {
-        return cpuMonitorService.getAuth(user, password);
-    }
+    public String getItemId(String hostId, String dataType, String auth) {
+        JSONObject filter = new JSONObject();
+        String searchKey = SnmpConstants.SNMP_MEMORY_SYSTEM;
 
-    @Override
-    public String getHostId(String hostName, String auth) {
-        return cpuMonitorService.getHostId(hostName, auth);
-    }
-
-    @Override
-    public String getItemId(String hostId, String searchKey, String auth) {
-        return cpuMonitorService.getItemId(hostId, searchKey, auth);
+        if (DataTypeEnum.AGENT.getCode().equals(dataType)) {
+            searchKey = AgentConstants.AGENT_CPU_SYSTEM;
+        }
+        filter.put("key_", new String[]{searchKey});
+        return super.getItemId(hostId, auth, filter);
     }
 
     @Override

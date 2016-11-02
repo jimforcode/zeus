@@ -1,7 +1,8 @@
 package com.zeus.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,8 @@ public abstract class BaseController {
 
     public static final String RESULT_KEY_RESULT = "result";
     public static final String RESULT_KEY_STATUS = "status";
+
+    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     protected Map<String, Object> resultOK() {
         HashMap<String, Object> messageOK;
