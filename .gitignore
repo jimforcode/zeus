@@ -1,6 +1,15 @@
-<<<<<<< HEAD
-/target/
+*.iml
+*.ipr
+*.iws
+*.log
+*.idea
+.gradle
 /bin/
-=======
-target/
->>>>>>> dev_jim
+build/*
+*.class
+out/*
+target/*
+*.project
+*.classpath
+.settings/*
+/target/
