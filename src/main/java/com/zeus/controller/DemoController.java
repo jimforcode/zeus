@@ -8,22 +8,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.zeus.common.config.ApiCfg;
 import com.zeus.dto.Pagination;
 import com.zeus.model.User;
 import com.zeus.service.UserService;
-import com.zeus.service.ZabbixService;
-
-import io.github.hengyunabc.zabbix.api.ZabbixApi;
 
 @Controller
 @RequestMapping("demo")
 public class DemoController extends BaseController {
 	@Autowired
 	private UserService userService;
- 
-	@Autowired
-	private ZabbixService zabbixService;
 
 	@Autowired
 	private ApiCfg apiCfg;
@@ -64,21 +59,10 @@ public class DemoController extends BaseController {
 		return "login";
 	}
 
-	@RequestMapping("/api")
-	@ResponseBody
-	public Map<String, Object> testApi(String username, String pwd) {
-		return resultOK(zabbixService.auth(username, pwd));
-	}
-
 	@RequestMapping(value = "post", method = RequestMethod.POST)
 	@ResponseBody
 	public Map<String, Object> methodPost(String name, String age) {
 		return resultOK(name);
 	}
 
-	@RequestMapping(value = "get")
-	@ResponseBody
-	public Map<String, Object> methodGet(String[] hosts) {
-		return resultOK(this.zabbixService.hostGet(hosts));
-	}
 }
