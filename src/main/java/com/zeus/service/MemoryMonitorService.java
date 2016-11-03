@@ -2,11 +2,13 @@ package com.zeus.service;
 
 import com.alibaba.fastjson.JSONArray;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Administrator on 2016/10/29 0029.
  */
 public interface MemoryMonitorService {
-    String getAuth(String user, String password);
+    String getAuth(HttpServletRequest request);
 
     String getHostId(String hostName, String auth);
 

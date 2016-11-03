@@ -27,6 +27,7 @@ public class ApiCfg {
 	private String zabbixHostPort;
 
 	@Value("#{configProperties['zabbix.password']}")
+
 	public String getZabbixAuthUrl() {
 		return zabbixAuthUrl;
 	}
