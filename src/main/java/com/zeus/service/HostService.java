@@ -6,4 +6,6 @@ public interface HostService {
 	boolean isExist(String host);
 
 	public JSONObject hostGet(String[] hosts);
+
+	public JSONObject hostGetWithselectGroups(String[] hosts);
 }

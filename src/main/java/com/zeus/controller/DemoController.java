@@ -41,7 +41,7 @@ public class DemoController extends BaseController {
 		page.setTotal(100);
 		page.setCountPage(1);
 
-		model.addAttribute("page", page.getFirstResult());
+		model.addAttribute("page", page);
 		return "index";
 
 	}

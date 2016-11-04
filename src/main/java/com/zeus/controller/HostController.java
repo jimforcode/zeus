@@ -3,6 +3,7 @@ package com.zeus.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zeus.common.annotation.login.RequestAllowOirginRequired;
 import com.zeus.common.config.ApiCfg;
 import com.zeus.service.HostService;
 
@@ -34,9 +36,19 @@ public class HostController extends BaseController {
 	private ApiCfg apiCfg;
 
 	@RequestMapping("/get")
+	@RequestAllowOirginRequired
 	@ResponseBody
 	public Map<String, Object> hostGet(HttpServletRequest request) {
 		String[] hosts = { apiCfg.getZabbixHost() };
 		return resultOK(hostService.hostGet(hosts));
 	}
+
+	@RequestMapping("/get/selectGroups")
+	@RequestAllowOirginRequired
+	@ResponseBody
+	public Map<String, Object> hostGetWithselectGroups(HttpServletRequest request, HttpServletResponse response) {
+		String[] hosts = { apiCfg.getZabbixHost() };
+		return resultOK(hostService.hostGetWithselectGroups(hosts));
+	}
+
 }

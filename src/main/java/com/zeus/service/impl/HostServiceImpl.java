@@ -37,4 +37,15 @@ public class HostServiceImpl implements HostService {
 		return getResponse;
 	}
 
+	@Override
+	public JSONObject hostGetWithselectGroups(String[] hosts) {
+		logger.trace("host.get:input:{}", hosts);
+		JSONObject filter = new JSONObject();
+		filter.put("host", hosts);
+		Request getRequest = RequestBuilder.newBuilder().method("host.get").paramEntry("filter", filter).paramEntry("selectGroups", "extend").paramEntry("output", "hostid").build();
+		JSONObject getResponse = zabbixApi.call(getRequest);
+		logger.trace("host.get:output{}", getResponse);
+		return getResponse;
+	}
+
 }
