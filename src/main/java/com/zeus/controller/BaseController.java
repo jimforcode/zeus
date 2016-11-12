@@ -1,5 +1,7 @@
 package com.zeus.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,7 +38,7 @@ public abstract class BaseController {
 
         messageOK = new HashMap<String, Object>();
         messageOK.put(RESULT_KEY_STATUS, RESULT_STATUS_OK);
-        messageOK.put(RESULT_KEY_RESULT, obj);
+        messageOK.put(RESULT_KEY_RESULT, new Gson().toJson(obj));
         return messageOK;
     }
 
@@ -45,7 +47,7 @@ public abstract class BaseController {
 
         messageOK = new HashMap<String, Object>();
         messageOK.put(RESULT_KEY_STATUS, RESULT_STATUS_OK);
-        messageOK.put(key, value);
+        messageOK.put(key, new Gson().toJson(value));
         return messageOK;
     }
 

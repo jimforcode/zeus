@@ -1,0 +1,17 @@
+package com.zeus.common.utils;
+
+import java.math.BigDecimal;
+
+/**
+ * Created by Administrator on 2016/11/12 0012.
+ */
+public class StorageUnitUtil {
+
+    /**
+     * K -> G
+     */
+    public static BigDecimal K2G(Long storageValue, int scale) {
+        return new BigDecimal(storageValue).divide(new BigDecimal(1024 * 1024 * 1024)).setScale(scale, BigDecimal.ROUND_HALF_UP);
+    }
+
+}

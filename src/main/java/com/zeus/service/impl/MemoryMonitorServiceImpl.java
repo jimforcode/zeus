@@ -23,14 +23,12 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
 
     @Override
     public String getItemId(String hostId, String dataType, String auth) {
-        JSONObject filter = new JSONObject();
-        String searchKey = SnmpConstants.SNMP_MEMORY_SYSTEM;
+        String searchKey = SnmpConstants.SNMP_MEM_TOTAL_FREE;
 
         if (DataTypeEnum.AGENT.getCode().equals(dataType)) {
             searchKey = AgentConstants.AGENT_CPU_SYSTEM;
         }
-        filter.put("key_", new String[]{searchKey});
-        return super.getItemId(hostId, auth, filter);
+        return super.getItemId(hostId, auth, searchKey);
     }
 
     @Override
