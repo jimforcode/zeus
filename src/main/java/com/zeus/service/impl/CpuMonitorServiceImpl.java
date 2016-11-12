@@ -24,14 +24,12 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
     @Override
     public String getItemId(String hostId, String dataType, String auth) {
 
-        JSONObject filter = new JSONObject();
         String searchKey = SnmpConstants.SNMP_CPU_SYSTEM;
 
         if (DataTypeEnum.AGENT.getCode().equals(dataType)) {
             searchKey = AgentConstants.AGENT_CPU_SYSTEM;
         }
-        filter.put("key_", new String[]{searchKey});
-        return super.getItemId(hostId, auth, filter);
+        return super.getItemId(hostId, auth,searchKey);
     }
 
     @Override
