@@ -13,21 +13,21 @@ public class DtoBeanFactory {
     public static DiskInfoDto convertByDiskAvailableSpace(HistoryUint historyUintDB) {
         DiskInfoDto diskInfoDto = new DiskInfoDto();
         diskInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
-        diskInfoDto.setAvailableSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + "G");
+        diskInfoDto.setAvailableSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + Constants.UNIT_G);
         return diskInfoDto;
     }
 
     public static DiskInfoDto convertByDiskUsedSpace(HistoryUint historyUintDB) {
         DiskInfoDto diskInfoDto = new DiskInfoDto();
         diskInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
-        diskInfoDto.setUseSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + "G");
+        diskInfoDto.setUseSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + Constants.UNIT_G);
         return diskInfoDto;
     }
 
     public static DiskInfoDto convertByDiskTotalSpace(HistoryUint historyUintDB) {
         DiskInfoDto diskInfoDto = new DiskInfoDto();
         diskInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
-        diskInfoDto.setTotalSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + "G");
+        diskInfoDto.setTotalSpace(StorageUnitUtil.K2G(historyUintDB.getValue(), 2) + Constants.UNIT_G);
         return diskInfoDto;
     }
 
