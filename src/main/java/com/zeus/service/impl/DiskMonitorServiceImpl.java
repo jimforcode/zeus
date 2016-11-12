@@ -29,11 +29,17 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
 
         DiskInfoDto diskInfoDto = new DiskInfoDto();
         switch (requestTypeEnum) {
-            case DISK_AVAIL_SPACE:
-                diskInfoDto = getDiskAvailSpace(itemId, auth);
+            case DISK_AVAILABLE_SPACE:
+                diskInfoDto = getDiskAvailableSpace(itemId, auth);
                 break;
             case DISK_USED_SPACE:
                 diskInfoDto = getDiskUsedSpace(itemId, auth);
+                break;
+            case DISK_TOTAL_SPACE:
+                diskInfoDto = getDiskTotalSpace(itemId, auth);
+                break;
+            case DISK_USE_PERCENT:
+                diskInfoDto = getDiskUsePercent(itemId, auth);
                 break;
             default:
                 break;
@@ -41,13 +47,31 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoDto;
     }
 
-    private DiskInfoDto getDiskAvailSpace(String itemId, String auth) {
+    private DiskInfoDto getDiskUsePercent(String itemId, String auth) {
         String jsonResult = doRequestCommon(itemId, auth);
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
             return null;
         }
-        return DtoBeanFactory.convertByDiskAvailSpace(historyUints.get(0));
+        return DtoBeanFactory.convertByDiskUsePercent(historyUints.get(0));
+    }
+
+    private DiskInfoDto getDiskTotalSpace(String itemId, String auth) {
+        String jsonResult = doRequestCommon(itemId, auth);
+        List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
+        if (CollectionUtils.isEmpty(historyUints)) {
+            return null;
+        }
+        return DtoBeanFactory.convertByDiskTotalSpace(historyUints.get(0));
+    }
+
+    private DiskInfoDto getDiskAvailableSpace(String itemId, String auth) {
+        String jsonResult = doRequestCommon(itemId, auth);
+        List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
+        if (CollectionUtils.isEmpty(historyUints)) {
+            return null;
+        }
+        return DtoBeanFactory.convertByDiskAvailableSpace(historyUints.get(0));
     }
 
     private DiskInfoDto getDiskUsedSpace(String itemId, String auth) {

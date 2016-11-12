@@ -5,70 +5,83 @@ package com.zeus.dto;
  */
 public class DiskInfoDto {
 
-	/**
-	 * 时间
-	 */
-	private String date;
+    /**
+     * 时间
+     */
+    private String date;
 
-	/**
-	 * 剩余空间
-	 */
-	private String availableSpace;
+    /**
+     * 剩余空间
+     */
+    private String availableSpace;
 
-	/**
-	 * 使用空间
-	 */
-	private String useSpace;
-
-
-	/**
-	 * 总空间
-	 */
-	private String totalSpace;
+    /**
+     * 使用空间
+     */
+    private String useSpace;
 
 
-	/**
-	 * 安装路径
-	 */
-	private String installPath;
+    /**
+     * 总空间
+     */
+    private String totalSpace;
 
-	public String getDate() {
-		return date;
-	}
 
-	public void setDate(String date) {
-		this.date = date;
-	}
+    /**
+     * 安装路径
+     */
+    private String installPath;
 
-	public String getAvailableSpace() {
-		return availableSpace;
-	}
+    /**
+     * 使用空间百分比
+     */
+    private String usePercent;
 
-	public void setAvailableSpace(String availableSpace) {
-		this.availableSpace = availableSpace;
-	}
+    public String getUsePercent() {
+        return usePercent;
+    }
 
-	public String getUseSpace() {
-		return useSpace;
-	}
+    public void setUsePercent(String usePercent) {
+        this.usePercent = usePercent;
+    }
 
-	public void setUseSpace(String useSpace) {
-		this.useSpace = useSpace;
-	}
+    public String getDate() {
+        return date;
+    }
 
-	public String getTotalSpace() {
-		return totalSpace;
-	}
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public void setTotalSpace(String totalSpace) {
-		this.totalSpace = totalSpace;
-	}
+    public String getAvailableSpace() {
+        return availableSpace;
+    }
 
-	public String getInstallPath() {
-		return installPath;
-	}
+    public void setAvailableSpace(String availableSpace) {
+        this.availableSpace = availableSpace;
+    }
 
-	public void setInstallPath(String installPath) {
-		this.installPath = installPath;
-	}
+    public String getUseSpace() {
+        return useSpace;
+    }
+
+    public void setUseSpace(String useSpace) {
+        this.useSpace = useSpace;
+    }
+
+    public String getTotalSpace() {
+        return totalSpace;
+    }
+
+    public void setTotalSpace(String totalSpace) {
+        this.totalSpace = totalSpace;
+    }
+
+    public String getInstallPath() {
+        return installPath;
+    }
+
+    public void setInstallPath(String installPath) {
+        this.installPath = installPath;
+    }
 }

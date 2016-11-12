@@ -33,14 +33,14 @@ public class DiskMoitorController extends BaseController {
      * @param response
      * @return
      */
-    @RequestMapping(value = "diskAvailSpace", method = RequestMethod.GET)
+    @RequestMapping(value = "diskAvailableSpace", method = RequestMethod.GET)
     @RequestAllowOirginRequired
     @ResponseBody
-    public Map<String, Object> getDiskAvailSpace(HttpServletRequest request, HttpServletResponse response) {
+    public Map<String, Object> diskAvailableSpace(HttpServletRequest request, HttpServletResponse response) {
 
         DiskInfoDto result = null;
         try {
-            result = doCommon(request, SnmpConstants.SNMP_DISK_AVAIL_SPACE, DiskRequestTypeEnum.DISK_AVAIL_SPACE);
+            result = doCommon(request, SnmpConstants.SNMP_DISK_AVAILABLE_SPACE, DiskRequestTypeEnum.DISK_AVAILABLE_SPACE);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskAvailSpace exception=" + e);
         }
@@ -64,6 +64,48 @@ public class DiskMoitorController extends BaseController {
             result = doCommon(request, SnmpConstants.SNMP_DISK_USED_SPACE, DiskRequestTypeEnum.DISK_USED_SPACE);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskUsedSpace exception=" + e);
+        }
+        return resultOK(result);
+    }
+
+    /**
+     * 获取磁盘总空间
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "diskTotalSpace", method = RequestMethod.GET)
+    @RequestAllowOirginRequired
+    @ResponseBody
+    public Map<String, Object> getDiskTotalSpace(HttpServletRequest request, HttpServletResponse response) {
+
+        DiskInfoDto result = null;
+        try {
+            result = doCommon(request, SnmpConstants.SNMP_DISK_TOTAL_SPACE, DiskRequestTypeEnum.DISK_TOTAL_SPACE);
+        } catch (Exception e) {
+            logger.error("DiskMoitorController getDiskTotalSpace exception=" + e);
+        }
+        return resultOK(result);
+    }
+
+    /**
+     * 磁盘使用空间百分比
+     *
+     * @param request
+     * @param response
+     * @return
+     */
+    @RequestMapping(value = "diskUsePercent", method = RequestMethod.GET)
+    @RequestAllowOirginRequired
+    @ResponseBody
+    public Map<String, Object> getDiskUsePercent(HttpServletRequest request, HttpServletResponse response) {
+
+        DiskInfoDto result = null;
+        try {
+            result = doCommon(request, SnmpConstants.SNMP_DISK_USE_PERCENT, DiskRequestTypeEnum.DISK_USE_PERCENT);
+        } catch (Exception e) {
+            logger.error("DiskMoitorController getDiskUsePercent exception=" + e);
         }
         return resultOK(result);
     }

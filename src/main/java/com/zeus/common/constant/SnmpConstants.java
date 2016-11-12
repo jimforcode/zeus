@@ -9,6 +9,8 @@ public class SnmpConstants {
     public static final String SNMP_MEMORY_SYSTEM = "vm.memory.size[available]"; // TODO: 2016/11/2
     public static final String SNMP_MEM_TOTAL_FREE = "vm.memory.size[available]"; // TODO: 2016/11/2
 
-    public static final String SNMP_DISK_AVAIL_SPACE = "dskAvail"; // 磁盘可用空间
+    public static final String SNMP_DISK_AVAILABLE_SPACE = "dskAvail"; // 磁盘可用空间
     public static final String SNMP_DISK_USED_SPACE = "dskUsed"; // 磁盘可用空间
+    public static final String SNMP_DISK_TOTAL_SPACE = "dskTotal"; // 磁盘总空间
+    public static final String SNMP_DISK_USE_PERCENT = "dskPercent"; // 磁盘使用空间百分比
 }
