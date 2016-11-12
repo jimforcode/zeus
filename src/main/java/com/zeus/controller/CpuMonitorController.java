@@ -25,8 +25,6 @@ public class CpuMonitorController extends BaseController {
 
     @Autowired
     CpuMonitorService cpuMonitorService;
-    @Autowired
-    ZabbixUtil zabbixUtil;
 
     @RequestMapping(value = "cpuInfo", method = RequestMethod.GET)
     @ResponseBody
@@ -39,7 +37,7 @@ public class CpuMonitorController extends BaseController {
             String auth = cpuMonitorService.getAuth(request);
 
             // 2.获取指定主机的hostId
-            String hostId = cpuMonitorService.getHostId(Constants.HOST_NAME, auth);
+            String hostId = cpuMonitorService.getHostId(apiCfg.getZabbixHostName(), auth);
 
             // 3.获取该指定主机的监控项itemId
             String itemId = cpuMonitorService.getItemId(hostId, dataType, auth);

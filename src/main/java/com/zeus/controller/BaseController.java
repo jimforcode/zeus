@@ -2,8 +2,11 @@ package com.zeus.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
+import com.zeus.common.config.ApiCfg;
+import com.zeus.service.DiskMonitorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +17,9 @@ import java.util.Map;
  *
  */
 public abstract class BaseController {
+
+    @Autowired
+    ApiCfg apiCfg;
 
     public static final String RESULT_STATUS_OK = "OK";
     public static final String RESULT_STATUS_ERROR = "ERROR";

@@ -122,7 +122,7 @@ public class DiskMoitorController extends BaseController {
         String auth = diskMonitorService.getAuth(request);
 
         // 2.获取指定主机的hostId
-        String hostId = diskMonitorService.getHostId(Constants.HOST_NAME, auth);
+        String hostId = diskMonitorService.getHostId(apiCfg.getZabbixHostName(), auth);
 
         // 3.获取该指定主机的监控项itemId
         String itemId = diskMonitorService.getItemId(hostId, auth, searchKey);
