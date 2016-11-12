@@ -1,5 +1,6 @@
 package com.zeus.service;
 
+import com.zeus.common.constant.DiskRequestTypeEnum;
 import com.zeus.dto.DiskInfoDto;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,5 +15,5 @@ public interface DiskMonitorService {
 
     String getItemId(String hostId, String searchKey, String auth);
 
-    DiskInfoDto getDiskMonitorInfo(String itemId, String auth);
+    DiskInfoDto getDiskMonitorInfo(String itemId, String auth, DiskRequestTypeEnum requestTypeEnum);
 }

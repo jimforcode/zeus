@@ -1,6 +1,8 @@
 package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zeus.common.constant.AgentConstants;
+import com.zeus.common.constant.SnmpConstants;
 import com.zeus.common.utils.ZabbixUtil;
 import io.github.hengyunabc.zabbix.api.Request;
 import io.github.hengyunabc.zabbix.api.RequestBuilder;
@@ -9,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * Created by dingaolin252 on 2016/11/2.
@@ -38,7 +41,7 @@ public class BaseServiceImpl {
         return hostId;
     }
 
-    public String getItemId(String hostId, String auth,String searchKey) {
+    public String getItemId(String hostId, String auth, String searchKey) {
         JSONObject filter = new JSONObject();
         filter.put("key_", new String[]{searchKey});
 

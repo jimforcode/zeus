@@ -17,7 +17,7 @@ public class DateUtil {
         SimpleDateFormat dateformat = new SimpleDateFormat(format);
         GregorianCalendar gc = new GregorianCalendar();
         // 秒 -> 毫秒
-        gc.setTimeInMillis(1478921171L * 1000);
+        gc.setTimeInMillis(currentTimeSeconds * 1000);
         return dateformat.format(gc.getTime());
     }
 

@@ -1,6 +1,7 @@
 package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zeus.common.constant.DiskRequestTypeEnum;
 import com.zeus.dto.DiskInfoDto;
 import com.zeus.dto.DtoBeanFactory;
 import com.zeus.model.HistoryUint;
@@ -24,21 +25,48 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
     private ZabbixApi zabbixApi;
 
     @Override
-    public DiskInfoDto getDiskMonitorInfo(String itemId, String auth) {
-        Request getRequest = RequestBuilder.newBuilder()
-                .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
-                .paramEntry("limit", "10").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
-                .auth(auth).build();
+    public DiskInfoDto getDiskMonitorInfo(String itemId, String auth, DiskRequestTypeEnum requestTypeEnum) {
 
-        JSONObject response = zabbixApi.call(getRequest);
-        String jsonArray = response.getJSONArray("result").toString();
+        DiskInfoDto diskInfoDto = new DiskInfoDto();
+        switch (requestTypeEnum) {
+            case DISK_AVAIL_SPACE:
+                diskInfoDto = getDiskAvailSpace(itemId, auth);
+                break;
+            case DISK_USED_SPACE:
+                diskInfoDto = getDiskUsedSpace(itemId, auth);
+                break;
+            default:
+                break;
+        }
+        return diskInfoDto;
+    }
 
-        List<HistoryUint> historyUints = JSONObject.parseArray(jsonArray, HistoryUint.class);
+    private DiskInfoDto getDiskAvailSpace(String itemId, String auth) {
+        String jsonResult = doRequestCommon(itemId, auth);
+        List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
             return null;
         }
-
         return DtoBeanFactory.convertByDiskAvailSpace(historyUints.get(0));
+    }
+
+    private DiskInfoDto getDiskUsedSpace(String itemId, String auth) {
+        String jsonResult = doRequestCommon(itemId, auth);
+        List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
+        if (CollectionUtils.isEmpty(historyUints)) {
+            return null;
+        }
+        return DtoBeanFactory.convertByDiskUsedSpace(historyUints.get(0));
+    }
+
+    private String doRequestCommon(String itemId, String auth) {
+        Request getRequest = RequestBuilder.newBuilder()
+                .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
+                .paramEntry("limit", "1").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
+                .auth(auth).build();
+
+        JSONObject response = zabbixApi.call(getRequest);
+        return response.getJSONArray("result").toString();
     }
 
 }

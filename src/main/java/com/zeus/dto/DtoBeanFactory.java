@@ -16,4 +16,8 @@ public class DtoBeanFactory {
         return diskInfoDto;
     }
 
+    public static DiskInfoDto convertByDiskUsedSpace(HistoryUint historyUintDB) {
+        return convertByDiskAvailSpace(historyUintDB);
+    }
+
 }
