@@ -129,4 +129,20 @@ public class DtoBeanFactory {
         ioInfoDto.setSendRate(historyUintDB.getValue() + Constants.RATE_BLOCK_S);
         return ioInfoDto;
     }
+
+    public static NetInfoDto convertByNetInTotalFlow(HistoryUint historyUintDB) {
+        NetInfoDto netInfoDto = new NetInfoDto();
+        netInfoDto.setClock(historyUintDB.getClock());
+        netInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        netInfoDto.setInTotalFlow(String.valueOf(historyUintDB.getValue()));
+        return netInfoDto;
+    }
+
+    public static NetInfoDto convertByNetOutTotalFlow(HistoryUint historyUintDB) {
+        NetInfoDto netInfoDto = new NetInfoDto();
+        netInfoDto.setClock(historyUintDB.getClock());
+        netInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        netInfoDto.setOutTotalFlow(String.valueOf(historyUintDB.getValue()));
+        return netInfoDto;
+    }
 }

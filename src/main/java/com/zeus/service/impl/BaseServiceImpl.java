@@ -1,6 +1,8 @@
 package com.zeus.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.zeus.common.requestEnum.NetRequestTypeEnum;
 import com.zeus.common.utils.ZabbixUtil;
 import com.zeus.dto.DiskInfoDto;
 import io.github.hengyunabc.zabbix.api.Request;
@@ -55,6 +57,20 @@ public class BaseServiceImpl {
 
             String itemId = response.getJSONArray("result")
                     .getJSONObject(0).getString("itemid");
+
+            if (NetRequestTypeEnum.NET_IN_TOTAL_FLOW.getCode().equals(searchKey) || NetRequestTypeEnum.NET_OUT_TOTAL_FLOW.getCode().equals(searchKey)) {
+                Object[] jsonArray = response.getJSONArray("result").toArray();
+                StringBuilder itemids = new StringBuilder();
+                for (int i = 0; i < jsonArray.length; i++) {
+                    JSONObject jsonObject = (JSONObject) jsonArray[i];
+                    if (i == jsonArray.length - 1) {
+                        itemids.append(jsonObject.get("itemid"));
+                    } else {
+                        itemids.append(jsonObject.get("itemid")).append(",");
+                    }
+                }
+                itemId = itemids.toString();
+            }
             result.put(searchKey, itemId);
         }
         return result;
