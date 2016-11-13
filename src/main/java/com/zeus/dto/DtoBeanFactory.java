@@ -37,4 +37,36 @@ public class DtoBeanFactory {
         diskInfoDto.setUsePercent(historyUintDB.getValue() + Constants.HUNDRED_PERCENT);
         return diskInfoDto;
     }
+
+    public static CpuInfoDto convertByCpuIdlePercent(HistoryUint historyUintDB) {
+        CpuInfoDto cpuInfoDto = new CpuInfoDto();
+        cpuInfoDto.setClock(historyUintDB.getClock());
+        cpuInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        cpuInfoDto.setIdleCpuPercent(historyUintDB.getValue() + Constants.HUNDRED_PERCENT);
+        return cpuInfoDto;
+    }
+
+    public static CpuInfoDto convertByCpuProcessorLoadPercent(HistoryUint historyUintDB) {
+        CpuInfoDto cpuInfoDto = new CpuInfoDto();
+        cpuInfoDto.setClock(historyUintDB.getClock());
+        cpuInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        cpuInfoDto.setProcessorLoadPercent(historyUintDB.getValue() + Constants.HUNDRED_PERCENT);
+        return cpuInfoDto;
+    }
+
+    public static CpuInfoDto convertByCpuUserPercent(HistoryUint historyUintDB) {
+        CpuInfoDto cpuInfoDto = new CpuInfoDto();
+        cpuInfoDto.setClock(historyUintDB.getClock());
+        cpuInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        cpuInfoDto.setUserCpuPercent(historyUintDB.getValue() + Constants.HUNDRED_PERCENT);
+        return cpuInfoDto;
+    }
+
+    public static CpuInfoDto convertByCpuSystemPercent(HistoryUint historyUintDB) {
+        CpuInfoDto cpuInfoDto = new CpuInfoDto();
+        cpuInfoDto.setClock(historyUintDB.getClock());
+        cpuInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        cpuInfoDto.setSystemCpuPercent(historyUintDB.getValue() + Constants.HUNDRED_PERCENT);
+        return cpuInfoDto;
+    }
 }

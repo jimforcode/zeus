@@ -1,8 +1,6 @@
 package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zeus.common.constant.AgentConstants;
-import com.zeus.common.constant.SnmpConstants;
 import com.zeus.common.utils.ZabbixUtil;
 import io.github.hengyunabc.zabbix.api.Request;
 import io.github.hengyunabc.zabbix.api.RequestBuilder;
@@ -11,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -41,18 +41,22 @@ public class BaseServiceImpl {
         return hostId;
     }
 
-    public String getItemId(String hostId, String auth, String searchKey) {
-        JSONObject filter = new JSONObject();
-        filter.put("key_", new String[]{searchKey});
+    public Map<String, String> getItemId(String hostId, String auth, List<String> searchKeyList) {
+        Map<String, String> result = new HashMap<>();
+        for (String searchKey : searchKeyList) {
+            JSONObject filter = new JSONObject();
+            filter.put("key_", new String[]{searchKey});
 
-        Request request = RequestBuilder.newBuilder().paramEntry("search", filter)
-                .paramEntry("hostids", hostId).paramEntry("output", "itemids").method("item.get")
-                .auth(auth).build();
-        JSONObject response = zabbixApi.call(request);
+            Request request = RequestBuilder.newBuilder().paramEntry("search", filter)
+                    .paramEntry("hostids", hostId).paramEntry("output", "itemids").method("item.get")
+                    .auth(auth).build();
+            JSONObject response = zabbixApi.call(request);
 
-        String itemId = response.getJSONArray("result")
-                .getJSONObject(0).getString("itemid");
-        return itemId;
+            String itemId = response.getJSONArray("result")
+                    .getJSONObject(0).getString("itemid");
+            result.put(searchKey, itemId);
+        }
+        return result;
     }
 
 }

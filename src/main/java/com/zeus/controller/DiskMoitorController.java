@@ -1,9 +1,7 @@
 package com.zeus.controller;
 
 import com.zeus.common.annotation.login.RequestAllowOirginRequired;
-import com.zeus.common.constant.Constants;
-import com.zeus.common.constant.DiskRequestTypeEnum;
-import com.zeus.common.constant.SnmpConstants;
+import com.zeus.common.requestEnum.DiskRequestTypeEnum;
 import com.zeus.dto.DiskInfoDto;
 import com.zeus.service.DiskMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class DiskMoitorController extends BaseController {
 
         DiskInfoDto result = null;
         try {
-            result = doCommon(request, SnmpConstants.SNMP_DISK_AVAILABLE_SPACE, DiskRequestTypeEnum.DISK_AVAILABLE_SPACE);
+            result = doCommon(request, null, DiskRequestTypeEnum.DISK_AVAILABLE_SPACE);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskAvailSpace exception=" + e);
         }
@@ -61,7 +59,7 @@ public class DiskMoitorController extends BaseController {
 
         DiskInfoDto result = null;
         try {
-            result = doCommon(request, SnmpConstants.SNMP_DISK_USED_SPACE, DiskRequestTypeEnum.DISK_USED_SPACE);
+            result = doCommon(request, null, DiskRequestTypeEnum.DISK_USED_SPACE);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskUsedSpace exception=" + e);
         }
@@ -82,7 +80,7 @@ public class DiskMoitorController extends BaseController {
 
         DiskInfoDto result = null;
         try {
-            result = doCommon(request, SnmpConstants.SNMP_DISK_TOTAL_SPACE, DiskRequestTypeEnum.DISK_TOTAL_SPACE);
+            result = doCommon(request, null, DiskRequestTypeEnum.DISK_TOTAL_SPACE);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskTotalSpace exception=" + e);
         }
@@ -103,7 +101,7 @@ public class DiskMoitorController extends BaseController {
 
         DiskInfoDto result = null;
         try {
-            result = doCommon(request, SnmpConstants.SNMP_DISK_USE_PERCENT, DiskRequestTypeEnum.DISK_USE_PERCENT);
+            result = doCommon(request, null, DiskRequestTypeEnum.DISK_USE_PERCENT);
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskUsePercent exception=" + e);
         }
@@ -119,16 +117,16 @@ public class DiskMoitorController extends BaseController {
     public DiskInfoDto doCommon(HttpServletRequest request, String searchKey, DiskRequestTypeEnum requestTypeEnum) throws Exception {
 
         // 1.获取auth
-        String auth = diskMonitorService.getAuth(request);
-
-        // 2.获取指定主机的hostId
-        String hostId = diskMonitorService.getHostId(apiCfg.getZabbixHostName(), auth);
-
-        // 3.获取该指定主机的监控项itemId
-        String itemId = diskMonitorService.getItemId(hostId, auth, searchKey);
+//        String auth = diskMonitorService.getAuth(request);
+//
+//        // 2.获取指定主机的hostId
+//        String hostId = diskMonitorService.getHostId(apiCfg.getZabbixHostName(), auth);
+//
+//        // 3.获取该指定主机的监控项itemId
+//        String itemId = diskMonitorService.getItemId(hostId, auth, searchKey);
 
         // 4.获取该监控项的监控数据
-        DiskInfoDto diskInfoDto = diskMonitorService.getDiskMonitorInfo(itemId, auth, requestTypeEnum);
+        DiskInfoDto diskInfoDto = null/*diskMonitorService.getDiskMonitorInfo(itemId, auth, requestTypeEnum)*/;
 
         return diskInfoDto;
     }

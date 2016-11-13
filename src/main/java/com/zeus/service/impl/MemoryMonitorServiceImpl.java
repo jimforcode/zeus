@@ -2,9 +2,6 @@ package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.zeus.common.constant.AgentConstants;
-import com.zeus.common.constant.DataTypeEnum;
-import com.zeus.common.constant.SnmpConstants;
 import com.zeus.service.MemoryMonitorService;
 import io.github.hengyunabc.zabbix.api.Request;
 import io.github.hengyunabc.zabbix.api.RequestBuilder;
@@ -20,16 +17,6 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
 
     @Autowired
     private ZabbixApi zabbixApi;
-
-    @Override
-    public String getItemId(String hostId, String dataType, String auth) {
-        String searchKey = SnmpConstants.SNMP_MEM_TOTAL_FREE;
-
-        if (DataTypeEnum.AGENT.getCode().equals(dataType)) {
-            searchKey = AgentConstants.AGENT_CPU_SYSTEM;
-        }
-        return super.getItemId(hostId, auth, searchKey);
-    }
 
     @Override
     public JSONArray getMemoryMonitorInfo(String itemId, String timeFrom, String timeTill, String auth) {

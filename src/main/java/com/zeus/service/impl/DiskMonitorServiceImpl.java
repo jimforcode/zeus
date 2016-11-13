@@ -1,7 +1,7 @@
 package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zeus.common.constant.DiskRequestTypeEnum;
+import com.zeus.common.requestEnum.DiskRequestTypeEnum;
 import com.zeus.dto.DiskInfoDto;
 import com.zeus.dto.DtoBeanFactory;
 import com.zeus.model.HistoryUint;
@@ -16,7 +16,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.List;
 
 /**
- * 内存监控信息
+ * 磁盘监控信息
  */
 @Service
 public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonitorService {
@@ -86,7 +86,7 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
     private String doRequestCommon(String itemId, String auth) {
         Request getRequest = RequestBuilder.newBuilder()
                 .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
-                .paramEntry("limit", "1").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
+                .paramEntry("limit", "10").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
                 .auth(auth).build();
 
         JSONObject response = zabbixApi.call(getRequest);

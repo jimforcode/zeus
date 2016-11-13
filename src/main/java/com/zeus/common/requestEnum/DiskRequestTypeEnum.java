@@ -1,4 +1,4 @@
-package com.zeus.common.constant;
+package com.zeus.common.requestEnum;
 
 /**
  * Created by dingaolin on 2016/11/2.
