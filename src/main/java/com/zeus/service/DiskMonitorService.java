@@ -17,5 +17,5 @@ public interface DiskMonitorService {
 
     Map<String, String> getItemId(String hostId, String auth, List<String> searchKeyList);
 
-    DiskInfoDto getDiskMonitorInfo(String itemId, String auth, DiskRequestTypeEnum requestTypeEnum);
+    List<DiskInfoDto> getDiskMonitorInfo(Map<String, String> itemId, String auth, DiskRequestTypeEnum requestTypeEnum);
 }

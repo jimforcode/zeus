@@ -2,6 +2,7 @@ package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.zeus.common.utils.ZabbixUtil;
+import com.zeus.dto.DiskInfoDto;
 import io.github.hengyunabc.zabbix.api.Request;
 import io.github.hengyunabc.zabbix.api.RequestBuilder;
 import io.github.hengyunabc.zabbix.api.ZabbixApi;
@@ -58,5 +59,6 @@ public class BaseServiceImpl {
         }
         return result;
     }
+
 
 }

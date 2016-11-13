@@ -1,7 +1,10 @@
 package com.zeus.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.zeus.common.requestEnum.CpuRequestTypeEnum;
 import com.zeus.common.requestEnum.DiskRequestTypeEnum;
+import com.zeus.common.utils.DateUtil;
+import com.zeus.dto.CpuInfoDto;
 import com.zeus.dto.DiskInfoDto;
 import com.zeus.dto.DtoBeanFactory;
 import com.zeus.model.HistoryUint;
@@ -13,7 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 磁盘监控信息
@@ -25,62 +31,118 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
     private ZabbixApi zabbixApi;
 
     @Override
-    public DiskInfoDto getDiskMonitorInfo(String itemId, String auth, DiskRequestTypeEnum requestTypeEnum) {
+    public List<DiskInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, DiskRequestTypeEnum requestTypeEnum) {
 
-        DiskInfoDto diskInfoDto = new DiskInfoDto();
+        List<DiskInfoDto> diskInfoDtoList = new ArrayList<>();
         switch (requestTypeEnum) {
+            case DISK_ALL:
+                diskInfoDtoList = getAll(itemIdMap, auth);
+                break;
             case DISK_AVAILABLE_SPACE:
-                diskInfoDto = getDiskAvailableSpace(itemId, auth);
+                diskInfoDtoList = getDiskAvailableSpace(itemIdMap, auth);
                 break;
             case DISK_USED_SPACE:
-                diskInfoDto = getDiskUsedSpace(itemId, auth);
+                diskInfoDtoList = getDiskUsedSpace(itemIdMap, auth);
                 break;
             case DISK_TOTAL_SPACE:
-                diskInfoDto = getDiskTotalSpace(itemId, auth);
+                diskInfoDtoList = getDiskTotalSpace(itemIdMap, auth);
                 break;
             case DISK_USE_PERCENT:
-                diskInfoDto = getDiskUsePercent(itemId, auth);
+                diskInfoDtoList = getDiskUsePercent(itemIdMap, auth);
                 break;
             default:
                 break;
         }
-        return diskInfoDto;
+        return diskInfoDtoList;
     }
 
-    private DiskInfoDto getDiskUsePercent(String itemId, String auth) {
+    private List<DiskInfoDto> getAll(Map<String, String> itemIdMap, String auth) {
+        List<DiskInfoDto> diskInfoList = new ArrayList<>();
+
+        Map<Long, DiskInfoDto> diskUsePercentMap = convertToMapFromList(getDiskUsePercent(itemIdMap, auth));
+        Map<Long, DiskInfoDto> diskTotalSoaceMap = convertToMapFromList(getDiskTotalSpace(itemIdMap, auth));
+        Map<Long, DiskInfoDto> diskAvailableSpace = convertToMapFromList(getDiskAvailableSpace(itemIdMap, auth));
+        Map<Long, DiskInfoDto> diskUsedSpaceMap = convertToMapFromList(getDiskUsedSpace(itemIdMap, auth));
+
+        for (Map.Entry<Long, DiskInfoDto> entry : diskUsedSpaceMap.entrySet()) {
+            DiskInfoDto diskInfoDto = new DiskInfoDto();
+            diskInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(entry.getValue().getClock(), DateUtil.DATE_WITH_SECOND));
+            diskInfoDto.setUsePercent(diskUsePercentMap.get(entry.getKey()).getUsePercent());
+            diskInfoDto.setTotalSpace(diskTotalSoaceMap.get(entry.getKey()).getTotalSpace());
+            diskInfoDto.setAvailableSpace(diskAvailableSpace.get(entry.getKey()).getAvailableSpace());
+            diskInfoDto.setUseSpace(entry.getValue().getUseSpace());
+            diskInfoList.add(diskInfoDto);
+        }
+        return diskInfoList;
+    }
+
+    private List<DiskInfoDto> getDiskUsePercent(Map<String, String> itemIdMap, String auth) {
+        List<DiskInfoDto> diskInfoList = new ArrayList<>();
+        String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_USE_PERCENT.getCode());
         String jsonResult = doRequestCommon(itemId, auth);
+
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
             return null;
         }
-        return DtoBeanFactory.convertByDiskUsePercent(historyUints.get(0));
+
+        for (HistoryUint historyUint : historyUints) {
+            diskInfoList.add(DtoBeanFactory.convertByDiskUsePercent(historyUint));
+        }
+
+        return diskInfoList;
     }
 
-    private DiskInfoDto getDiskTotalSpace(String itemId, String auth) {
+    private List<DiskInfoDto> getDiskTotalSpace(Map<String, String> itemIdMap, String auth) {
+        List<DiskInfoDto> diskInfoList = new ArrayList<>();
+        String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_TOTAL_SPACE.getCode());
         String jsonResult = doRequestCommon(itemId, auth);
+
+        List<HistoryUint> historyUints;
+        historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
+        if (CollectionUtils.isEmpty(historyUints)) {
+            return null;
+        }
+
+        for (HistoryUint historyUint : historyUints) {
+            diskInfoList.add(DtoBeanFactory.convertByDiskTotalSpace(historyUint));
+        }
+
+        return diskInfoList;
+    }
+
+    private List<DiskInfoDto> getDiskAvailableSpace(Map<String, String> itemIdMap, String auth) {
+        List<DiskInfoDto> diskInfoList = new ArrayList<>();
+        String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_AVAILABLE_SPACE.getCode());
+        String jsonResult = doRequestCommon(itemId, auth);
+
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
             return null;
         }
-        return DtoBeanFactory.convertByDiskTotalSpace(historyUints.get(0));
+
+        for (HistoryUint historyUint : historyUints) {
+            diskInfoList.add(DtoBeanFactory.convertByDiskAvailableSpace(historyUint));
+        }
+
+        return diskInfoList;
     }
 
-    private DiskInfoDto getDiskAvailableSpace(String itemId, String auth) {
+    private List<DiskInfoDto> getDiskUsedSpace(Map<String, String> itemIdMap, String auth) {
+        List<DiskInfoDto> diskInfoList = new ArrayList<>();
+        String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_USED_SPACE.getCode());
         String jsonResult = doRequestCommon(itemId, auth);
+
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
             return null;
         }
-        return DtoBeanFactory.convertByDiskAvailableSpace(historyUints.get(0));
-    }
 
-    private DiskInfoDto getDiskUsedSpace(String itemId, String auth) {
-        String jsonResult = doRequestCommon(itemId, auth);
-        List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
-        if (CollectionUtils.isEmpty(historyUints)) {
-            return null;
+        for (HistoryUint historyUint : historyUints) {
+            diskInfoList.add(DtoBeanFactory.convertByDiskAvailableSpace(historyUint));
         }
-        return DtoBeanFactory.convertByDiskUsedSpace(historyUints.get(0));
+
+        return diskInfoList;
     }
 
     private String doRequestCommon(String itemId, String auth) {
@@ -91,6 +153,14 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
 
         JSONObject response = zabbixApi.call(getRequest);
         return response.getJSONArray("result").toString();
+    }
+
+    private Map<Long, DiskInfoDto> convertToMapFromList(List<DiskInfoDto> diskInfoList) {
+        Map<Long, DiskInfoDto> result = new HashMap<>();
+        for (DiskInfoDto diskInfoDto : diskInfoList) {
+            result.put(diskInfoDto.getClock(), diskInfoDto);
+        }
+        return result;
     }
 
 }

@@ -6,6 +6,11 @@ package com.zeus.dto;
 public class DiskInfoDto {
 
     /**
+     * 时间Clock
+     */
+    private Long clock;
+
+    /**
      * 时间
      */
     private String date;
@@ -36,6 +41,14 @@ public class DiskInfoDto {
      * 使用空间百分比
      */
     private String usePercent;
+
+    public Long getClock() {
+        return clock;
+    }
+
+    public void setClock(Long clock) {
+        this.clock = clock;
+    }
 
     public String getUsePercent() {
         return usePercent;
