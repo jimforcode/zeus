@@ -17,5 +17,5 @@ public interface MemoryMonitorService {
 
     Map<String, String> getItemId(String hostId, String auth, List<String> searchKeyList);
 
-    List<MemoryInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, MemoryRequestTypeEnum requestTypeEnum);
+    List<MemoryInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, MemoryRequestTypeEnum requestTypeEnum, Integer limit);
 }

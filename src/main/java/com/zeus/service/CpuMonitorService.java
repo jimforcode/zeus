@@ -17,5 +17,5 @@ public interface CpuMonitorService {
 
     Map<String, String> getItemId(String hostId, String auth, List<String> searchKeyList);
 
-    List<CpuInfoDto> getCpuMonitorInfo(Map<String, String> itemIdMap, String timeFrom, String timeTill, String auth, CpuRequestTypeEnum requestTypeEnum);
+    List<CpuInfoDto> getCpuMonitorInfo(Map<String, String> itemIdMap, String timeFrom, String timeTill, String auth, CpuRequestTypeEnum requestTypeEnum, Integer limit);
 }

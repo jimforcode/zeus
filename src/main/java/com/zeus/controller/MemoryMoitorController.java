@@ -38,11 +38,11 @@ public class MemoryMoitorController extends BaseController {
     @RequestMapping(value = "memoryInfo", method = RequestMethod.GET)
     @RequestAllowOirginRequired
     @ResponseBody
-    public Map<String, Object> getMemoryInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName) {
+    public Map<String, Object> getMemoryInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName, @RequestParam(defaultValue = "10", required = false) String limit) {
 
         List<MemoryInfoDto> result = null;
         try {
-            result = doRequest(request, Arrays.asList(MemoryRequestTypeEnum.MEMORY_ALL.getCode().split(",")), MemoryRequestTypeEnum.MEMORY_ALL, hostName);
+            result = doRequest(request, Arrays.asList(MemoryRequestTypeEnum.MEMORY_ALL.getCode().split(",")), MemoryRequestTypeEnum.MEMORY_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
             logger.error("MemoryMoitorController getMemoryInfo exception=" + e);
         }
@@ -56,7 +56,7 @@ public class MemoryMoitorController extends BaseController {
      * @param request
      * @return
      */
-    public List<MemoryInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, MemoryRequestTypeEnum requestTypeEnum, String hostName) throws Exception {
+    public List<MemoryInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, MemoryRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
 
         // 1.获取auth
         String auth = memoryMonitorService.getAuth(request);
@@ -68,7 +68,7 @@ public class MemoryMoitorController extends BaseController {
         Map<String, String> itemIdMap = memoryMonitorService.getItemId(hostId, auth, searchKeyList);
 
         // 4.获取该监控项的监控数据
-        List<MemoryInfoDto> memoryInfoDtoList = memoryMonitorService.getDiskMonitorInfo(itemIdMap, auth, requestTypeEnum);
+        List<MemoryInfoDto> memoryInfoDtoList = memoryMonitorService.getDiskMonitorInfo(itemIdMap, auth, requestTypeEnum, limit);
 
         return memoryInfoDtoList;
     }

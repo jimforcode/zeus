@@ -39,11 +39,11 @@ public class DiskMoitorController extends BaseController {
     @RequestMapping(value = "diskInfo", method = RequestMethod.GET)
     @RequestAllowOirginRequired
     @ResponseBody
-    public Map<String, Object> getDiskInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName) {
+    public Map<String, Object> getDiskInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName, @RequestParam(defaultValue = "10", required = false) String limit) {
 
         List<DiskInfoDto> result = null;
         try {
-            result = doRequest(request, Arrays.asList(DiskRequestTypeEnum.DISK_ALL.getCode().split(",")), DiskRequestTypeEnum.DISK_ALL, hostName);
+            result = doRequest(request, Arrays.asList(DiskRequestTypeEnum.DISK_ALL.getCode().split(",")), DiskRequestTypeEnum.DISK_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskInfo exception=" + e);
         }
@@ -57,7 +57,7 @@ public class DiskMoitorController extends BaseController {
      * @param request
      * @return
      */
-    public List<DiskInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, DiskRequestTypeEnum requestTypeEnum, String hostName) throws Exception {
+    public List<DiskInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, DiskRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
 
         // 1.获取auth
         String auth = diskMonitorService.getAuth(request);
@@ -69,7 +69,7 @@ public class DiskMoitorController extends BaseController {
         Map<String, String> itemIdMap = diskMonitorService.getItemId(hostId, auth, searchKeyList);
 
         // 4.获取该监控项的监控数据
-        List<DiskInfoDto> diskInfoDtoList = diskMonitorService.getDiskMonitorInfo(itemIdMap, auth, requestTypeEnum);
+        List<DiskInfoDto> diskInfoDtoList = diskMonitorService.getDiskMonitorInfo(itemIdMap, auth, requestTypeEnum, limit);
 
         return diskInfoDtoList;
     }

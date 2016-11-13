@@ -29,24 +29,24 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
     private ZabbixApi zabbixApi;
 
     @Override
-    public List<CpuInfoDto> getCpuMonitorInfo(Map<String, String> itemIdMap, String timeFrom, String timeTill, String auth, CpuRequestTypeEnum requestTypeEnum) {
+    public List<CpuInfoDto> getCpuMonitorInfo(Map<String, String> itemIdMap, String timeFrom, String timeTill, String auth, CpuRequestTypeEnum requestTypeEnum, Integer limit) {
 
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
         switch (requestTypeEnum) {
             case CPU_ALL:
-                cpuInfoDtoList = getAll(itemIdMap, auth);
+                cpuInfoDtoList = getAll(itemIdMap, auth, limit);
                 break;
             case CPU_IDLE_PERCENT:
-                cpuInfoDtoList = getCpuIdlePercent(itemIdMap, auth);
+                cpuInfoDtoList = getCpuIdlePercent(itemIdMap, auth, limit);
                 break;
             case CPU_SYSTEM_PERCENT:
-                cpuInfoDtoList = getCpuSystemPercent(itemIdMap, auth);
+                cpuInfoDtoList = getCpuSystemPercent(itemIdMap, auth, limit);
                 break;
             case CPU_USER_PERCENT:
-                cpuInfoDtoList = getCpuUserPercent(itemIdMap, auth);
+                cpuInfoDtoList = getCpuUserPercent(itemIdMap, auth, limit);
                 break;
             case CPU_PROCESSOR_LOAD_PERCENT:
-                cpuInfoDtoList = getCpuProcessorLoadPercent(itemIdMap, auth);
+                cpuInfoDtoList = getCpuProcessorLoadPercent(itemIdMap, auth, limit);
                 break;
             default:
                 break;
@@ -54,13 +54,13 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    List<CpuInfoDto> getAll(Map<String, String> itemIdMap, String auth) {
+    List<CpuInfoDto> getAll(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
 
-        Map<Long, CpuInfoDto> processorLoadPercentMap = convertToMapFromList(getCpuProcessorLoadPercent(itemIdMap, auth));
-        Map<Long, CpuInfoDto> userPercentMap = convertToMapFromList(getCpuUserPercent(itemIdMap, auth));
-        Map<Long, CpuInfoDto> systemPercentMap = convertToMapFromList(getCpuSystemPercent(itemIdMap, auth));
-        Map<Long, CpuInfoDto> idlePercentMap = convertToMapFromList(getCpuIdlePercent(itemIdMap, auth));
+        Map<Long, CpuInfoDto> processorLoadPercentMap = convertToMapFromList(getCpuProcessorLoadPercent(itemIdMap, auth, limit));
+        Map<Long, CpuInfoDto> userPercentMap = convertToMapFromList(getCpuUserPercent(itemIdMap, auth, limit));
+        Map<Long, CpuInfoDto> systemPercentMap = convertToMapFromList(getCpuSystemPercent(itemIdMap, auth, limit));
+        Map<Long, CpuInfoDto> idlePercentMap = convertToMapFromList(getCpuIdlePercent(itemIdMap, auth, limit));
 
         for (Map.Entry<Long, CpuInfoDto> entry : processorLoadPercentMap.entrySet()) {
             CpuInfoDto cpuInfoDto = new CpuInfoDto();
@@ -74,10 +74,10 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    private List<CpuInfoDto> getCpuProcessorLoadPercent(Map<String, String> itemIdMap, String auth) {
+    private List<CpuInfoDto> getCpuProcessorLoadPercent(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
         String itemId = itemIdMap.get(CpuRequestTypeEnum.CPU_PROCESSOR_LOAD_PERCENT.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -90,10 +90,10 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    private List<CpuInfoDto> getCpuUserPercent(Map<String, String> itemIdMap, String auth) {
+    private List<CpuInfoDto> getCpuUserPercent(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
         String itemId = itemIdMap.get(CpuRequestTypeEnum.CPU_USER_PERCENT.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -106,10 +106,10 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    private List<CpuInfoDto> getCpuSystemPercent(Map<String, String> itemIdMap, String auth) {
+    private List<CpuInfoDto> getCpuSystemPercent(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
         String itemId = itemIdMap.get(CpuRequestTypeEnum.CPU_SYSTEM_PERCENT.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -122,10 +122,10 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    private List<CpuInfoDto> getCpuIdlePercent(Map<String, String> itemIdMap, String auth) {
+    private List<CpuInfoDto> getCpuIdlePercent(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<CpuInfoDto> cpuInfoDtoList = new ArrayList<>();
         String itemId = itemIdMap.get(CpuRequestTypeEnum.CPU_IDLE_PERCENT.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -138,10 +138,10 @@ public class CpuMonitorServiceImpl extends BaseServiceImpl implements CpuMonitor
         return cpuInfoDtoList;
     }
 
-    private String doRequestCommon(String itemId, String auth) {
+    private String doRequestCommon(String itemId, String auth, Integer limit) {
         Request getRequest = RequestBuilder.newBuilder()
                 .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
-                .paramEntry("limit", "10").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
+                .paramEntry("limit", limit).paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
                 .auth(auth).build();
 
         JSONObject response = zabbixApi.call(getRequest);

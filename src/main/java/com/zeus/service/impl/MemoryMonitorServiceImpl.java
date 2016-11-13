@@ -31,27 +31,27 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
 
     @Override
 
-    public List<MemoryInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, MemoryRequestTypeEnum requestTypeEnum) {
+    public List<MemoryInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, MemoryRequestTypeEnum requestTypeEnum, Integer limit) {
 
         List<MemoryInfoDto> memoryInfoDtoList = new ArrayList<>();
         switch (requestTypeEnum) {
             case MEMORY_ALL:
-                memoryInfoDtoList = getAll(itemIdMap, auth);
+                memoryInfoDtoList = getAll(itemIdMap, auth, limit);
                 break;
             case MEMORY_USED_SPACE:
-                memoryInfoDtoList = getMemoryUsedSpace(itemIdMap, auth);
+                memoryInfoDtoList = getMemoryUsedSpace(itemIdMap, auth, limit);
                 break;
             case MEMORY_BUFFER_SPACE:
-                memoryInfoDtoList = getMemoryBufferpace(itemIdMap, auth);
+                memoryInfoDtoList = getMemoryBufferpace(itemIdMap, auth, limit);
                 break;
             case MEMORY_CACHED_SPACE:
-                memoryInfoDtoList = getMemoryCachedSpace(itemIdMap, auth);
+                memoryInfoDtoList = getMemoryCachedSpace(itemIdMap, auth, limit);
                 break;
             case MEMORY_FREE_SPACE:
-                memoryInfoDtoList = getMemoryFreeSpace(itemIdMap, auth);
+                memoryInfoDtoList = getMemoryFreeSpace(itemIdMap, auth, limit);
                 break;
             case MEMORY_TOTAL_SPACE:
-                memoryInfoDtoList = getMemoryTotalSpace(itemIdMap, auth);
+                memoryInfoDtoList = getMemoryTotalSpace(itemIdMap, auth, limit);
                 break;
             default:
                 break;
@@ -59,14 +59,14 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoDtoList;
     }
 
-    private List<MemoryInfoDto> getAll(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getAll(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoDtoList = new ArrayList<>();
 
-        Map<Long, MemoryInfoDto> memoryUsedSpaceMap = convertToMapFromList(getMemoryUsedSpace(itemIdMap, auth));
-        Map<Long, MemoryInfoDto> memoryBufferSpaceMap = convertToMapFromList(getMemoryBufferpace(itemIdMap, auth));
-        Map<Long, MemoryInfoDto> memoryCachedSpaceMap = convertToMapFromList(getMemoryCachedSpace(itemIdMap, auth));
-        Map<Long, MemoryInfoDto> memoryFreeSpaceMap = convertToMapFromList(getMemoryFreeSpace(itemIdMap, auth));
-        Map<Long, MemoryInfoDto> memoryTotalSpaceMap = convertToMapFromList(getMemoryTotalSpace(itemIdMap, auth));
+        Map<Long, MemoryInfoDto> memoryUsedSpaceMap = convertToMapFromList(getMemoryUsedSpace(itemIdMap, auth, limit));
+        Map<Long, MemoryInfoDto> memoryBufferSpaceMap = convertToMapFromList(getMemoryBufferpace(itemIdMap, auth, limit));
+        Map<Long, MemoryInfoDto> memoryCachedSpaceMap = convertToMapFromList(getMemoryCachedSpace(itemIdMap, auth, limit));
+        Map<Long, MemoryInfoDto> memoryFreeSpaceMap = convertToMapFromList(getMemoryFreeSpace(itemIdMap, auth, limit));
+        Map<Long, MemoryInfoDto> memoryTotalSpaceMap = convertToMapFromList(getMemoryTotalSpace(itemIdMap, auth, limit));
 
         for (Map.Entry<Long, MemoryInfoDto> entry : memoryUsedSpaceMap.entrySet()) {
             MemoryInfoDto memoryInfoDto = new MemoryInfoDto();
@@ -81,10 +81,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoDtoList;
     }
 
-    private List<MemoryInfoDto> getMemoryUsedSpace(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getMemoryUsedSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(MemoryRequestTypeEnum.MEMORY_USED_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -98,10 +98,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoList;
     }
 
-    private List<MemoryInfoDto> getMemoryBufferpace(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getMemoryBufferpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(MemoryRequestTypeEnum.MEMORY_BUFFER_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -115,10 +115,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoList;
     }
 
-    private List<MemoryInfoDto> getMemoryCachedSpace(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getMemoryCachedSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(MemoryRequestTypeEnum.MEMORY_CACHED_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -132,10 +132,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoList;
     }
 
-    private List<MemoryInfoDto> getMemoryFreeSpace(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getMemoryFreeSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(MemoryRequestTypeEnum.MEMORY_FREE_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -149,10 +149,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoList;
     }
 
-    private List<MemoryInfoDto> getMemoryTotalSpace(Map<String, String> itemIdMap, String auth) {
+    private List<MemoryInfoDto> getMemoryTotalSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<MemoryInfoDto> memoryInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(MemoryRequestTypeEnum.MEMORY_TOTAL_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -166,10 +166,10 @@ public class MemoryMonitorServiceImpl extends BaseServiceImpl implements MemoryM
         return memoryInfoList;
     }
 
-    private String doRequestCommon(String itemId, String auth) {
+    private String doRequestCommon(String itemId, String auth, Integer limit) {
         Request getRequest = RequestBuilder.newBuilder()
                 .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
-                .paramEntry("limit", "10").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
+                .paramEntry("limit", limit).paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
                 .auth(auth).build();
 
         JSONObject response = zabbixApi.call(getRequest);

@@ -31,24 +31,24 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
     private ZabbixApi zabbixApi;
 
     @Override
-    public List<DiskInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, DiskRequestTypeEnum requestTypeEnum) {
+    public List<DiskInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, DiskRequestTypeEnum requestTypeEnum, Integer limit) {
 
         List<DiskInfoDto> diskInfoDtoList = new ArrayList<>();
         switch (requestTypeEnum) {
             case DISK_ALL:
-                diskInfoDtoList = getAll(itemIdMap, auth);
+                diskInfoDtoList = getAll(itemIdMap, auth, limit);
                 break;
             case DISK_AVAILABLE_SPACE:
-                diskInfoDtoList = getDiskAvailableSpace(itemIdMap, auth);
+                diskInfoDtoList = getDiskAvailableSpace(itemIdMap, auth, limit);
                 break;
             case DISK_USED_SPACE:
-                diskInfoDtoList = getDiskUsedSpace(itemIdMap, auth);
+                diskInfoDtoList = getDiskUsedSpace(itemIdMap, auth, limit);
                 break;
             case DISK_TOTAL_SPACE:
-                diskInfoDtoList = getDiskTotalSpace(itemIdMap, auth);
+                diskInfoDtoList = getDiskTotalSpace(itemIdMap, auth, limit);
                 break;
             case DISK_USE_PERCENT:
-                diskInfoDtoList = getDiskUsePercent(itemIdMap, auth);
+                diskInfoDtoList = getDiskUsePercent(itemIdMap, auth, limit);
                 break;
             default:
                 break;
@@ -56,13 +56,13 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoDtoList;
     }
 
-    private List<DiskInfoDto> getAll(Map<String, String> itemIdMap, String auth) {
+    private List<DiskInfoDto> getAll(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<DiskInfoDto> diskInfoList = new ArrayList<>();
 
-        Map<Long, DiskInfoDto> diskUsePercentMap = convertToMapFromList(getDiskUsePercent(itemIdMap, auth));
-        Map<Long, DiskInfoDto> diskTotalSoaceMap = convertToMapFromList(getDiskTotalSpace(itemIdMap, auth));
-        Map<Long, DiskInfoDto> diskAvailableSpace = convertToMapFromList(getDiskAvailableSpace(itemIdMap, auth));
-        Map<Long, DiskInfoDto> diskUsedSpaceMap = convertToMapFromList(getDiskUsedSpace(itemIdMap, auth));
+        Map<Long, DiskInfoDto> diskUsePercentMap = convertToMapFromList(getDiskUsePercent(itemIdMap, auth, limit));
+        Map<Long, DiskInfoDto> diskTotalSoaceMap = convertToMapFromList(getDiskTotalSpace(itemIdMap, auth, limit));
+        Map<Long, DiskInfoDto> diskAvailableSpace = convertToMapFromList(getDiskAvailableSpace(itemIdMap, auth, limit));
+        Map<Long, DiskInfoDto> diskUsedSpaceMap = convertToMapFromList(getDiskUsedSpace(itemIdMap, auth, limit));
 
         for (Map.Entry<Long, DiskInfoDto> entry : diskUsedSpaceMap.entrySet()) {
             DiskInfoDto diskInfoDto = new DiskInfoDto();
@@ -76,10 +76,10 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoList;
     }
 
-    private List<DiskInfoDto> getDiskUsePercent(Map<String, String> itemIdMap, String auth) {
+    private List<DiskInfoDto> getDiskUsePercent(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<DiskInfoDto> diskInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_USE_PERCENT.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -93,10 +93,10 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoList;
     }
 
-    private List<DiskInfoDto> getDiskTotalSpace(Map<String, String> itemIdMap, String auth) {
+    private List<DiskInfoDto> getDiskTotalSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<DiskInfoDto> diskInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_TOTAL_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints;
         historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
@@ -111,10 +111,10 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoList;
     }
 
-    private List<DiskInfoDto> getDiskAvailableSpace(Map<String, String> itemIdMap, String auth) {
+    private List<DiskInfoDto> getDiskAvailableSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<DiskInfoDto> diskInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_AVAILABLE_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -128,10 +128,10 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoList;
     }
 
-    private List<DiskInfoDto> getDiskUsedSpace(Map<String, String> itemIdMap, String auth) {
+    private List<DiskInfoDto> getDiskUsedSpace(Map<String, String> itemIdMap, String auth, Integer limit) {
         List<DiskInfoDto> diskInfoList = new ArrayList<>();
         String itemId = itemIdMap.get(DiskRequestTypeEnum.DISK_USED_SPACE.getCode());
-        String jsonResult = doRequestCommon(itemId, auth);
+        String jsonResult = doRequestCommon(itemId, auth, limit);
 
         List<HistoryUint> historyUints = JSONObject.parseArray(jsonResult, HistoryUint.class);
         if (CollectionUtils.isEmpty(historyUints)) {
@@ -145,10 +145,10 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         return diskInfoList;
     }
 
-    private String doRequestCommon(String itemId, String auth) {
+    private String doRequestCommon(String itemId, String auth, Integer limit) {
         Request getRequest = RequestBuilder.newBuilder()
                 .paramEntry("itemids", itemId).paramEntry("sortfield", "clock").paramEntry("sortorder", "DESC")
-                .paramEntry("limit", "10").paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
+                .paramEntry("limit", limit).paramEntry("history", "3").paramEntry("output", "extend").method("history.get")
                 .auth(auth).build();
 
         JSONObject response = zabbixApi.call(getRequest);

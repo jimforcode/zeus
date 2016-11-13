@@ -37,10 +37,10 @@ public class CpuMonitorController extends BaseController {
     @RequestMapping(value = "cpuInfo", method = RequestMethod.GET)
     @ResponseBody
     @RequestAllowOirginRequired
-    public Map<String, Object> getCpuInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName) {
+    public Map<String, Object> getCpuInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName, @RequestParam(defaultValue = "10", required = false) String limit) {
         List<CpuInfoDto> result = null;
         try {
-            result = doRequest(request, Arrays.asList(CpuRequestTypeEnum.CPU_ALL.getCode().split(",")), CpuRequestTypeEnum.CPU_ALL, hostName);
+            result = doRequest(request, Arrays.asList(CpuRequestTypeEnum.CPU_ALL.getCode().split(",")), CpuRequestTypeEnum.CPU_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
             logger.error("CpuMonitorController getCpuInfo exception=" + e);
         }
@@ -53,7 +53,7 @@ public class CpuMonitorController extends BaseController {
      * @param request
      * @return
      */
-    private List<CpuInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, CpuRequestTypeEnum requestTypeEnum, String hostName) throws Exception {
+    private List<CpuInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, CpuRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
 
         // 1.获取auth
         String auth = cpuMonitorService.getAuth(request);
@@ -65,7 +65,7 @@ public class CpuMonitorController extends BaseController {
         Map<String, String> itemIdMap = cpuMonitorService.getItemId(hostId, auth, searchKeyList);
 
         // 4.获取该监控项的监控数据
-        List<CpuInfoDto> cpuInfoDtoList = cpuMonitorService.getCpuMonitorInfo(itemIdMap, null, null, auth, requestTypeEnum);
+        List<CpuInfoDto> cpuInfoDtoList = cpuMonitorService.getCpuMonitorInfo(itemIdMap, null, null, auth, requestTypeEnum, limit);
 
         return cpuInfoDtoList;
     }
