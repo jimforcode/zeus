@@ -1,12 +1,12 @@
 package com.zeus.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 import com.zeus.common.config.ApiCfg;
-import com.zeus.service.DiskMonitorService;
+import com.zeus.common.exception.AuthException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -63,6 +63,12 @@ public abstract class BaseController {
         ret.put(RESULT_KEY_STATUS, RESULT_STATUS_ERROR);
         ret.put(RESULT_KEY_MESSAGE, message);
         return ret;
+    }
+
+    protected void isHostNameNull(String hostName) {
+        if (StringUtils.isEmpty(hostName)) {
+            throw new AuthException("hostName is null");
+        }
     }
 
 }

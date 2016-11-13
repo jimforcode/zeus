@@ -46,6 +46,7 @@ public class DiskMoitorController extends BaseController {
             result = doRequest(request, Arrays.asList(DiskRequestTypeEnum.DISK_ALL.getCode().split(",")), DiskRequestTypeEnum.DISK_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
             logger.error("DiskMoitorController getDiskInfo exception=" + e);
+            return resultError(e.getLocalizedMessage());
         }
         return resultOK(result);
     }
@@ -58,6 +59,9 @@ public class DiskMoitorController extends BaseController {
      * @return
      */
     public List<DiskInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, DiskRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
+
+        // 参数检查
+        isHostNameNull(hostName);
 
         // 1.获取auth
         String auth = diskMonitorService.getAuth(request);

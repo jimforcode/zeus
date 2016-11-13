@@ -113,4 +113,20 @@ public class DtoBeanFactory {
         memoryInfoDto.setMemoryBufferSpace(StorageUnitUtil.K2M(historyUintDB.getValue(), 2) + Constants.UNIT_MB);
         return memoryInfoDto;
     }
+
+    public static IOInfoDto convertByIOReceiveRate(HistoryUint historyUintDB) {
+        IOInfoDto ioInfoDto = new IOInfoDto();
+        ioInfoDto.setClock(historyUintDB.getClock());
+        ioInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        ioInfoDto.setReceiveRate(historyUintDB.getValue() + Constants.RATE_BLOCK_S);
+        return ioInfoDto;
+    }
+
+    public static IOInfoDto convertByIOSentRate(HistoryUint historyUintDB) {
+        IOInfoDto ioInfoDto = new IOInfoDto();
+        ioInfoDto.setClock(historyUintDB.getClock());
+        ioInfoDto.setDate(DateUtil.convertToDateFromTimeSeconds(historyUintDB.getClock(), DateUtil.DATE_WITH_SECOND));
+        ioInfoDto.setSendRate(historyUintDB.getValue() + Constants.RATE_BLOCK_S);
+        return ioInfoDto;
+    }
 }

@@ -6,6 +6,7 @@ import com.zeus.dto.CpuInfoDto;
 import com.zeus.service.CpuMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -43,6 +44,7 @@ public class CpuMonitorController extends BaseController {
             result = doRequest(request, Arrays.asList(CpuRequestTypeEnum.CPU_ALL.getCode().split(",")), CpuRequestTypeEnum.CPU_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
             logger.error("CpuMonitorController getCpuInfo exception=" + e);
+            return resultError(e.getLocalizedMessage());
         }
         return resultOK(result);
     }
@@ -54,6 +56,9 @@ public class CpuMonitorController extends BaseController {
      * @return
      */
     private List<CpuInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, CpuRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
+
+        // 参数检查
+        isHostNameNull(hostName);
 
         // 1.获取auth
         String auth = cpuMonitorService.getAuth(request);
