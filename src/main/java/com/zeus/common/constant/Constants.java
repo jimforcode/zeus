@@ -6,5 +6,6 @@ package com.zeus.common.constant;
  */
 public class Constants {
     public static final String HUNDRED_PERCENT = "%";
-    public static final String UNIT_G = "G";
+    public static final String UNIT_GB = "GB";
+    public static final String UNIT_MB = "MB";
 }

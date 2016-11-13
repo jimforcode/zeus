@@ -8,10 +8,17 @@ import java.math.BigDecimal;
 public class StorageUnitUtil {
 
     /**
-     * K -> G
+     * KB -> GB
      */
     public static BigDecimal K2G(Long storageValue, int scale) {
         return new BigDecimal(storageValue).divide(new BigDecimal(1024 * 1024 * 1024)).setScale(scale, BigDecimal.ROUND_HALF_UP);
+    }
+
+    /**
+     * KB -> MB
+     */
+    public static BigDecimal K2M(Long storageValue, int scale) {
+        return new BigDecimal(storageValue).divide(new BigDecimal(1024 * 1024)).setScale(scale, BigDecimal.ROUND_HALF_UP);
     }
 
 }

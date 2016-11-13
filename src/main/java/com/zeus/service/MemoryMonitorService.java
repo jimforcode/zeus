@@ -1,6 +1,7 @@
 package com.zeus.service;
 
-import com.alibaba.fastjson.JSONArray;
+import com.zeus.common.requestEnum.MemoryRequestTypeEnum;
+import com.zeus.dto.MemoryInfoDto;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -16,5 +17,5 @@ public interface MemoryMonitorService {
 
     Map<String, String> getItemId(String hostId, String auth, List<String> searchKeyList);
 
-    JSONArray getMemoryMonitorInfo(String itemId, String timeFrom, String timeTill, String auth);
+    List<MemoryInfoDto> getDiskMonitorInfo(Map<String, String> itemIdMap, String auth, MemoryRequestTypeEnum requestTypeEnum);
 }

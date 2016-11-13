@@ -30,7 +30,7 @@ public class DiskMoitorController extends BaseController {
     DiskMonitorService diskMonitorService;
 
     /**
-     * 获取磁盘剩余空间
+     * 获取磁盘信息
      *
      * @param request
      * @param response

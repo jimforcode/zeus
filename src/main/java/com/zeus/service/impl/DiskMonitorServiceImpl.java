@@ -87,7 +87,7 @@ public class DiskMonitorServiceImpl extends BaseServiceImpl implements DiskMonit
         }
 
         for (HistoryUint historyUint : historyUints) {
-            diskInfoList.add(DtoBeanFactory.convertByDiskUsePercent(historyUint));
+            diskInfoList.add(DtoBeanFactory.convertByDiskUsedPercent(historyUint));
         }
 
         return diskInfoList;
