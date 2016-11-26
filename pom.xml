@@ -187,6 +187,18 @@
             <artifactId>zabbix-api</artifactId>
             <version>0.0.1</version>
         </dependency>
+        <!-- snmp -->
+        <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <!-- sftp -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.53</version>
+        </dependency>
 
     </dependencies>
 
