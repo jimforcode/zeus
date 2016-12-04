@@ -14,7 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("readFile")
 public class SftpDemo extends BaseController {
 
-    @RequestMapping(value = "netInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "read", method = RequestMethod.GET)
     public ModelAndView getNetInfo(@RequestParam("destServer") String destServer, @RequestParam("path") String path, @RequestParam("fileName") String fileName) {
         ModelAndView mv = new ModelAndView();
         String text = null;
