@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeus.dao.RoleMenuPermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.zeus.model.RoleMenuPermissionKey" >
+    <id column="roleId" property="roleid" jdbcType="INTEGER" />
+    <id column="menuId" property="menuid" jdbcType="INTEGER" />
+    <id column="permissionId" property="permissionid" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.zeus.model.RoleMenuPermissionKey" >
+    delete from biz_role_menu_permission
+    where roleId = #{roleid,jdbcType=INTEGER}
+      and menuId = #{menuid,jdbcType=INTEGER}
+      and permissionId = #{permissionid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zeus.model.RoleMenuPermissionKey" >
+    insert into biz_role_menu_permission (roleId, menuId, permissionId
+      )
+    values (#{roleid,jdbcType=INTEGER}, #{menuid,jdbcType=INTEGER}, #{permissionid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeus.model.RoleMenuPermissionKey" >
+    insert into biz_role_menu_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        roleId,
+      </if>
+      <if test="menuid != null" >
+        menuId,
+      </if>
+      <if test="permissionid != null" >
+        permissionId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="permissionid != null" >
+        #{permissionid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

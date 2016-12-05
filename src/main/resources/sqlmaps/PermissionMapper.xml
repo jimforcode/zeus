@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeus.dao.PermissionMapper" >
+  <resultMap id="BaseResultMap" type="com.zeus.model.Permission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <id column="menuId" property="menuid" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, menuId, name, mark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.zeus.model.PermissionKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from biz_permission
+    where id = #{id,jdbcType=INTEGER}
+      and menuId = #{menuid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.zeus.model.PermissionKey" >
+    delete from biz_permission
+    where id = #{id,jdbcType=INTEGER}
+      and menuId = #{menuid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zeus.model.Permission" >
+    insert into biz_permission (id, menuId, name, 
+      mark)
+    values (#{id,jdbcType=INTEGER}, #{menuid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{mark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeus.model.Permission" >
+    insert into biz_permission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuid != null" >
+        menuId,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuid != null" >
+        #{menuid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeus.model.Permission" >
+    update biz_permission
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+      and menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeus.model.Permission" >
+    update biz_permission
+    set name = #{name,jdbcType=VARCHAR},
+      mark = #{mark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+      and menuId = #{menuid,jdbcType=INTEGER}
+  </update>
+</mapper>

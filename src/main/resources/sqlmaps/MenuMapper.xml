@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeus.dao.MenuMapper" >
+  <resultMap id="BaseResultMap" type="com.zeus.model.Menu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="menuUrl" property="menuurl" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="level" property="level" jdbcType="INTEGER" />
+    <result column="isleaf" property="isleaf" jdbcType="TINYINT" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="mark" property="mark" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, menuUrl, sort, level, isleaf, parentId, mark
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from biz_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from biz_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zeus.model.Menu" >
+    insert into biz_menu (id, name, menuUrl, 
+      sort, level, isleaf, 
+      parentId, mark)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{menuurl,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER}, #{level,jdbcType=INTEGER}, #{isleaf,jdbcType=TINYINT}, 
+      #{parentid,jdbcType=INTEGER}, #{mark,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeus.model.Menu" >
+    insert into biz_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="menuurl != null" >
+        menuUrl,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="isleaf != null" >
+        isleaf,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="mark != null" >
+        mark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null" >
+        #{isleaf,jdbcType=TINYINT},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        #{mark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeus.model.Menu" >
+    update biz_menu
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="menuurl != null" >
+        menuUrl = #{menuurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="isleaf != null" >
+        isleaf = #{isleaf,jdbcType=TINYINT},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="mark != null" >
+        mark = #{mark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeus.model.Menu" >
+    update biz_menu
+    set name = #{name,jdbcType=VARCHAR},
+      menuUrl = #{menuurl,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      level = #{level,jdbcType=INTEGER},
+      isleaf = #{isleaf,jdbcType=TINYINT},
+      parentId = #{parentid,jdbcType=INTEGER},
+      mark = #{mark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
