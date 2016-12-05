@@ -1,49 +1,86 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+	<context:component-scan base-package="com.zeus.*" />
 
-    <context:annotation-config/>
-    <context:component-scan base-package="com.zeus"/>
-    <context:component-scan base-package="io.github.hengyunabc.zabbix.api"/>
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<beans:bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"></beans:bean>
+	<!-- plan 2 -->
+	<annotation-driven>
+		<message-converters register-defaults="false">
+			<beans:bean
+				class="org.springframework.http.converter.StringHttpMessageConverter">
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:value>text/plain;charset=UTF-8</beans:value>
+						<beans:value>text/html;charset=UTF-8</beans:value>
+					</beans:list>
+				</beans:property>
+			</beans:bean>
+			<beans:bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<beans:property name="objectMapper">
+					<beans:bean
+						class="org.springframework.http.converter.json.Jackson2ObjectMapperFactoryBean">
+					</beans:bean>
+				</beans:property>
+				<beans:property name="supportedMediaTypes">
+					<beans:list>
+						<beans:bean class="org.springframework.http.MediaType">
+							<beans:constructor-arg index="0" value="text" />
+							<beans:constructor-arg index="1" value="plain" />
+							<beans:constructor-arg index="2" value="UTF-8" />
+						</beans:bean>
+						<beans:bean class="org.springframework.http.MediaType">
+							<beans:constructor-arg index="0" value="*" />
+							<beans:constructor-arg index="1" value="*" />
+							<beans:constructor-arg index="2" value="UTF-8" />
+						</beans:bean>
+						<beans:bean class="org.springframework.http.MediaType">
+							<beans:constructor-arg index="0" value="text" />
+							<beans:constructor-arg index="1" value="*" />
+							<beans:constructor-arg index="2" value="UTF-8" />
+						</beans:bean>
+						<beans:bean class="org.springframework.http.MediaType">
+							<beans:constructor-arg index="0" value="application" />
+							<beans:constructor-arg index="1" value="json" />
+							<beans:constructor-arg index="2" value="UTF-8" />
+						</beans:bean>
+					</beans:list>
+				</beans:property>
+			</beans:bean>
+		</message-converters>
+		<!-- 开发阶段放开 <mvc:argument-resolvers> <beans:bean class="com.zeus.common.annotation.resolver.AsynLoginResolver"></beans:bean> 
+			</mvc:argument-resolvers> -->
+	</annotation-driven>
 
-    <!-- 定义跳转的文件的前后缀 ，视图模式配置-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <!-- 这里的配置我的理解是自动给后面action的方法return的字符串加上前缀和后缀，变成一个可用的url地址 -->
-        <property name="prefix" value="/WEB-INF/view/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
-    <!--处理 @ResponseBody 中文乱码问题-->
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>
-                                text/html;charset=UTF-8
-                            </value>
-                        </list>
-                    </property>
-                </bean>
-                <!-- 启动JSON格式的配置 -->
-                <bean id="jacksonMessageConverter"
-                      class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                    <!-- 解决 HttpMediaTypeNotAcceptableException: Could not find acceptable representation -->
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>application/json;charset=UTF-8</value>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
+	<beans:bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/view/" />
+		<beans:property name="suffix" value=".jsp" />
+	</beans:bean>
 
+	<!-- 开发阶段放开 -->
+	<interceptors>
+		<!-- <interceptor> <mapping path="/**" /> <exclude-mapping path="/demo/login" 
+			/> <beans:bean class="com.zeus.common.interceptor.LoginInteceptor" /> </interceptor> -->
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/demo/login" />
+			<exclude-mapping path="/css/**" />
+			<exclude-mapping path="/js/**" />
+			<exclude-mapping path="/resources/**" />
+			<beans:bean class="com.zeus.common.interceptor.AuthInterceptor" />
+		</interceptor>
 
-</beans>
+	</interceptors>
+
+</beans:beans>
+    

@@ -47,7 +47,7 @@ public class DefaultZabbixApi implements ZabbixApi {
 
 	}
 
-	// 澧炲姞鏃犲弬鏋勯�犲嚱鏁�
+	// 婢х偛濮為弮鐘插棘閺嬪嫰锟界姴鍤遍弫锟�
 	public DefaultZabbixApi() {
 		// TODO Auto-generated constructor stub
 	}
@@ -70,7 +70,7 @@ public class DefaultZabbixApi implements ZabbixApi {
 	@PostConstruct
 	public void init() {
 		try {
-			logger.trace("璁よ瘉 url 浼犲叆锛歿}", this.apiCfg.getZabbixAuthUrl());
+			logger.trace(" zabbix-auth url: ", this.apiCfg.getZabbixAuthUrl());
 			uri = new URI(this.apiCfg.getZabbixAuthUrl());
 		} catch (URISyntaxException e) {
 			throw new RuntimeException("url invalid", e);
