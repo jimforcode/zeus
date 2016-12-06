@@ -70,7 +70,7 @@ public class DefaultZabbixApi implements ZabbixApi {
 	@PostConstruct
 	public void init() {
 		try {
-			logger.trace(" zabbix-auth url: ", this.apiCfg.getZabbixAuthUrl());
+			logger.trace(" zabbix-auth url: {} ", this.apiCfg.getZabbixAuthUrl());
 			uri = new URI(this.apiCfg.getZabbixAuthUrl());
 		} catch (URISyntaxException e) {
 			throw new RuntimeException("url invalid", e);

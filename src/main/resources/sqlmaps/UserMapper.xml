@@ -21,6 +21,10 @@
 			jdbcType="INTEGER" />
 		<result column="rows_per_page" property="rowsPerPage" jdbcType="INTEGER" />
 	</resultMap>
+	<resultMap id="menuAndPermission" type="com.zeus.dto.login.UrlAndPermission">
+		<result column="menuUrl" property="menuUrl" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
 	<sql id="Base_Column_List">
 		userid, alias, name, surname, passwd, url, autologin,
 		autologout, lang,
@@ -248,5 +252,41 @@
 		<if test="firstResult != null">
 			limit ${firstResult},${rows}
 		</if>
+	</select>
+	<!-- 用户对应的菜单查询 -->
+	<select id="getMenuByUser" resultType="java.lang.String"
+		parameterType="java.lang.Long">
+		select distinct m.menuUrl from
+		users u
+		left join
+		biz_role_user ru
+		on u.userid=ru.userid
+		left join
+		biz_role_menu_permission rmp
+		on
+		rmp.roleid=ru.roleid
+		left join biz_menu m
+		on m.id=rmp.menuid
+		where
+		u.userid=#{userId}
+	</select>
+	<!-- 用户对应的菜单权限查询 -->
+	<select id="getMenuPermissionByUser" resultMap="menuAndPermission"
+		parameterType="java.lang.Long">
+		select distinct m.menuUrl as  menuUrl ,p.name as name from 
+		users u
+		left join
+		biz_role_user ru
+		on u.userid=ru.userid
+		left join
+		biz_role_menu_permission rmp
+		on rmp.roleid=ru.roleid
+		left join biz_menu
+		m
+		on m.id=rmp.menuid
+		left join biz_permission p
+		on p.id=rmp.permissionId
+		where
+		u.userid=#{userId}
 	</select>
 </mapper>

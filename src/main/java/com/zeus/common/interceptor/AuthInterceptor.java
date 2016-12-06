@@ -1,5 +1,8 @@
 package com.zeus.common.interceptor;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,34 +24,46 @@ public class AuthInterceptor implements HandlerInterceptor {
 	public void afterCompletion(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, Exception arg3)
 			throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("+++++++++++++++++++++++++afterCompletion");
 	}
 
 	@Override
 	public void postHandle(HttpServletRequest arg0, HttpServletResponse arg1, Object arg2, ModelAndView arg3)
 			throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("+++++++++++++++++++++++++postHandle");
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public boolean preHandle(HttpServletRequest req, HttpServletResponse rep, Object arg2) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println("+++++++++++++++++++++++++preHandle");
+		logger.trace("accessable vertify start ..................");
+		String curReqUrl = req.getServletPath();
+		logger.trace("current request:{}", curReqUrl);
 
-		Map<String, List<String>> auths = new LinkedHashMap<String, List<String>>();
-		// key menu
-		// value functions
-
-		// cur url
-		String path = req.getServletPath();
-		if (auths.containsKey(path)) {
+		Map<String, HashSet<String>> auths = new LinkedHashMap<String, HashSet<String>>();
+		
+		auths = (Map<String, HashSet<String>>) req.getSession().getAttribute("auths");
+		logger.trace("my  permissions:{}", auths);
+		if (auths.containsKey(curReqUrl)) {
 
 		} else {
+			rep.setCharacterEncoding("UTF-8");
+			rep.setContentType("application/json; charset=utf-8");
+			PrintWriter out = null;
+			try {
+				out = rep.getWriter();
+				out.append("xxxxxZ");
 
-			return false;
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				if (out != null) {
+					out.close();
+				}
+			}
+
 		}
-
+		logger.trace("accessable vertify end ..................");
 		return true;
 	}
 
