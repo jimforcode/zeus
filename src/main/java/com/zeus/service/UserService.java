@@ -9,4 +9,11 @@ public interface UserService {
 	public User getUserById(Long uId);
 
 	public List<User> listUsers(Pagination page);
+
+	public int addUser(User user);
+
+	public int deleteUser(Long userid);
+
+	public int update(User user);
+
 }

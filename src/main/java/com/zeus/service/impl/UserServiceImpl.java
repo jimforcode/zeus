@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	UserMapper userMapper;
 
 	public User getUserById(Long uId) {
-		logger.debug("Èç²Î:{}", uId);
+		logger.debug("ï¿½ï¿½ï¿½:{}", uId);
 		return this.userMapper.selectByPrimaryKey(uId);
 	}
 
@@ -38,4 +38,17 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	public int addUser(User user) {
+		return this.userMapper.insert(user);
+	}
+
+	@Override
+	public int deleteUser(Long userid) {
+		return this.userMapper.deleteByPrimaryKey(userid);
+	}
+
+	@Override
+	public int update(User user) {
+		return this.userMapper.updateByPrimaryKey(user);
+	}
 }
