@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 	UserMapper userMapper;
 
 	public User getUserById(Long uId) {
-		logger.debug("»Î≤Œ:{}", uId);
+		logger.debug("ÂÖ•ÂèÇ:{}", uId);
 		return this.userMapper.selectByPrimaryKey(uId);
 	}
 
@@ -48,5 +48,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UrlAndPermission> getMenuPermissionByUser(Long userId) {
 		return this.userMapper.getMenuPermissionByUser(userId);
+	}
+
+	public int addUser(User user) {
+		return this.userMapper.insert(user);
+	}
+
+	@Override
+	public int deleteUser(Long userid) {
+		return this.userMapper.deleteByPrimaryKey(userid);
+	}
+
+	@Override
+	public int update(User user) {
+		return this.userMapper.updateByPrimaryKey(user);
 	}
 }

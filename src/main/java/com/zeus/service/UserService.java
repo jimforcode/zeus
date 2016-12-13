@@ -15,4 +15,9 @@ public interface UserService {
 
 	List<UrlAndPermission> getMenuPermissionByUser(Long userId);
 
+	public int addUser(User user);
+
+	public int deleteUser(Long userid);
+
+	public int update(User user);
 }
