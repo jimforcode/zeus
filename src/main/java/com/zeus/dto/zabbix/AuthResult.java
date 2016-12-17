@@ -1,8 +1,7 @@
 package com.zeus.dto.zabbix;
 
 /**
- * µÇÂ¼ÑéÖ¤
- * 
+ *
  * @author zengjin
  *
  */

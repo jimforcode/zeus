@@ -23,7 +23,6 @@ public class UserServiceImpl implements UserService {
 	UserMapper userMapper;
 
 	public User getUserById(Long uId) {
-		logger.debug("ИзІО:{}", uId);
 		return this.userMapper.selectByPrimaryKey(uId);
 	}
 
