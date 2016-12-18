@@ -1,4 +1,4 @@
-npackage com.zeus.service;
+package com.zeus.service;
 
 import java.util.List;
 

@@ -1,10 +1,12 @@
 package com.zeus.model;
 
+import javax.validation.constraints.Size;
+
 public class User {
 	private Long userid;
 
 	private String alias;
-
+    @Size(min=1,max=3,message="{name.error}")
 	private String name;
 
 	private String surname;

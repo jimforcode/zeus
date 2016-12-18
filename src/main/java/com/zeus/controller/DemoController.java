@@ -10,6 +10,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -63,9 +66,16 @@ public class DemoController extends BaseController {
 	}
 
 	@RequestMapping("login")
-	public String demoLoginx(Model model, Long userId) {
- 		List<String> menus = this.userService.listMenuByUser(userId);
-		List<UrlAndPermission> menusAndPermissions = this.userService.getMenuPermissionByUser(userId);
+	public String demoLoginx(Model model,@Validated User user,BindingResult bindingResult) {
+		  
+		List<ObjectError> allErrors= bindingResult.getAllErrors();
+		for(ObjectError error :allErrors){
+             System.out.println(error.getDefaultMessage());			
+		}
+		
+		
+		List<String> menus = this.userService.listMenuByUser(user.getUserid());
+		List<UrlAndPermission> menusAndPermissions = this.userService.getMenuPermissionByUser(user.getUserid());
 
 		Map<String, HashSet<String>> auths = new LinkedHashMap<String, HashSet<String>>();
 		// �˵�Ȩ��
