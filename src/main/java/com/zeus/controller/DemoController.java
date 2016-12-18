@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
@@ -65,12 +64,11 @@ public class DemoController extends BaseController {
 
 	@RequestMapping("login")
 	public String demoLoginx(Model model, Long userId) {
-		model.addAttribute("name", apiCfg.getZabbixAuthUrl());
-		List<String> menus = this.userService.listMenuByUser(userId);
+ 		List<String> menus = this.userService.listMenuByUser(userId);
 		List<UrlAndPermission> menusAndPermissions = this.userService.getMenuPermissionByUser(userId);
 
 		Map<String, HashSet<String>> auths = new LinkedHashMap<String, HashSet<String>>();
-		// ²Ëµ¥È¨ÏÞ
+		// ï¿½Ëµï¿½È¨ï¿½ï¿½
 		for (UrlAndPermission entity : menusAndPermissions) {
 			if (auths.containsKey(entity.getMenuUrl())) {
 				HashSet<String> permissions = auths.get(entity.getMenuUrl());
