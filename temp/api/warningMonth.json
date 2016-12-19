@@ -1,0 +1,22 @@
+{
+  "type": "",
+  "commonResponse": {
+    "code": "",
+    "message": ""
+  },
+  "data": [
+    {
+      "name" : "致命",
+      "data" : 12.3
+    }, {
+      "name" : "严重",
+      "data" : 12.6
+    }, {
+      "name" : "警告",
+      "data" : 18.9
+    }, {
+      "name" : "正常",
+      "data" : 56.8
+    }
+  ]
+}
