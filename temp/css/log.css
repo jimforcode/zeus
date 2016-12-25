@@ -1,0 +1,71 @@
+.btn-selected {
+	background-color: #5ea3b7!important;
+	border-color: #5ea3b7!important;
+}
+
+.btn-selected:focus,
+.btn-selected:active {
+	background-color: #5ea3b7!important;
+	border-color: #5ea3b7!important;
+}
+
+.jconfirm .jconfirm-box {
+	min-width: 150% !important;
+	background-color: #071118;
+	color: #d6dbe0;
+	font-size: 16px;
+	font-family: "微软雅黑";
+}
+
+.jconfirm.jconfirm-white .jconfirm-box .buttons button.btn-default {
+	color: #062535 !important;
+	font-family: "微软雅黑";
+}
+
+.content-area {
+	height: auto !important;
+	resize: none;
+}
+
+.modal-body input,
+.modal-body textarea {
+	color: rgba(102, 102, 102, 0.88) !important;
+}
+
+.modal-body label {
+	color: rgba(102, 102, 102, 0.88) !important;
+}
+
+.modal {
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.42)!important;
+}
+
+.modal-content {
+	border: 0px;
+	border-radius: 0px;
+}
+
+.modal-header {
+	background-color: rgba(6, 37, 53, 0.85);
+	color: #FFF;
+}
+
+.close {
+	color: #FFF;
+	opacity: .8;
+}
+
+.close:hover,
+.close:active,
+.close:focus {
+	color: #FFF;
+	opacity: 1;
+}
+
+.modal .btn-primary {
+	background-color: rgba(6, 37, 53, 0.85);
+}
+
+.modal .btn-primary:hover {
+	background-color: rgba(6, 37, 53, 0.95);
+}

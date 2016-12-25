@@ -1,0 +1,22 @@
+{
+  "type": "",
+  "commonResponse": {
+    "code": "",
+    "message": ""
+  },
+  "data": [
+    {
+      "name" : "致命",
+      "data" :[5, 3, 4]
+    }, {
+      "name" : "严重",
+      "data" :[2, 2, 3]
+    }, {
+      "name" : "警告",
+      "data" :[3, 4, 4]
+    }, {
+      "name" : "正常",
+      "data" :[3, 4, 4]
+    }
+  ]
+}

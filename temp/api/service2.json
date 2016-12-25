@@ -1,0 +1,20 @@
+{
+  "type": "",
+  "commonResponse": {
+    "code": "",
+    "message": ""
+  },
+  "data": [{
+		"kind": 1,
+		"kindName": "IDS",
+		"ip": ""
+	}, {
+		"kind": 2,
+		"kindName": "SW",
+		"ip": ""
+	}, {
+		"kind": 3,
+		"kindName": "FW",
+		"ip": ""
+	}]
+}

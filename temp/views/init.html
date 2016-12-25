@@ -1,0 +1,109 @@
+<!-- CONTENT -->
+<!--TITLE -->
+<div class="row init-title" id="paper-top">
+	<div class="col-lg-3">
+		<h2 class="tittle-content-header">
+            	<i class="icon-window"></i> 
+                <span>平台主页</span>
+           </h2>
+	</div>
+</div>
+<!--/ TITLE -->
+
+<!--  DEVICE MANAGER -->
+<div class="content-wrap init-content">
+	<div class="row">
+		<div id="siteClose" class="col-lg-6 col-sm-12">
+			<div class="title-alt">
+				<h6><span class="fontawesome-bar-chart"></span>&nbsp;年度告警统计</h6>
+			</div>
+			<div id="WarningBar" class="body-nest" style="min-height:385px;">
+			</div>
+		</div>
+		<div id="RealTimeClose" class="col-lg-6 col-sm-12">
+			<div class="title-alt">
+				<h6><span class="entypo-attention"></span>&nbsp;告警一栏&nbsp;(最近10条告警信息)</h6>
+			</div>
+			<div style="min-height:296px;" class="body-nest">
+				<table class="table table-bordered table-striped cf">
+					<thead class="cf">
+						<tr>
+							<th class="col-xs-5">告警内容</th>
+							<th class="col-xs-2">告警来源</th>
+							<th class="col-xs-1">IP地址</th>
+							<th class="col-xs-4">告警时间</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="wm in wmessages">
+							<td class="numeric">
+								<i class="icon icon-warning" title="" data-original-title="warning"></i> {{wm.message}}
+							</td>
+							<td>{{wm.origin}}</td>
+							<td>{{wm.ipAddress}}</td>
+							<td>{{wm.time}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="w-circle col-lg-6 col-sm-12">
+			<div class="title-alt">
+				<h6><span class="icon-graph-pie"></span>&nbsp;月度告警概率统计</h6>
+			</div>
+			<div id="WarningCircle" class="body-nest w-circle-body">
+			</div>
+		</div>
+		<div class="server-info col-lg-6 col-sm-12">
+			<div class="title-alt ">
+				<h6><span class="fontawesome-exclamation-sign "></span>&nbsp;服务器信息&nbsp;</h6>
+			</div>
+			<div class="body-nest server-info-body">
+				<div class="row">
+					<div class="col-lg-6" id="Info-CPU"></div>
+					<div class="col-lg-6" id="Info-RAM"></div>
+				</div>
+				<div>
+					<table class="table table-bordered table-striped cf">
+						<tbody>
+							<tr>
+								<td class="numeric">服务器名称</td>
+								<td>ZEUS</td>
+								<td class="numeric">IP</td>
+								<td>192.168.20.210</td>
+							</tr>
+							<tr>
+								<td class="numeric">端口</td>
+								<td>80</td>
+								<td class="numeric">CPU</td>
+								<td>四核</td>
+							</tr>
+							<tr>
+								<td class="numeric">硬盘</td>
+								<td>10T</td>
+								<td class="numeric">内存</td>
+								<td>16GB</td>
+							</tr>
+							<tr>
+								<td class="numeric">处理器</td>
+								<td>Inter(R) 7</td>
+								<td class="numeric">显卡</td>
+								<td>GeForce 940M</td>
+							</tr>
+							<tr>
+								<td class="numeric">蓝牙</td>
+								<td>有</td>
+								<td class="numeric">网卡</td>
+								<td>有</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--  / DEVICE MANAGER -->
