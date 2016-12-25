@@ -68,9 +68,12 @@
 	</beans:bean>
 
 	<!-- 开发阶段放开 -->
-	<interceptors>
-		<!-- <interceptor> <mapping path="/**" /> <exclude-mapping path="/demo/login" 
-			/> <beans:bean class="com.zeus.common.interceptor.LoginInteceptor" /> </interceptor> -->
+<!-- 	<interceptors>
+		<interceptor>
+			<mapping path="/**" />
+			<exclude-mapping path="/demo/login" />
+			<beans:bean class="com.zeus.common.interceptor.LoginInteceptor" />
+		</interceptor>
 		<interceptor>
 			<mapping path="/**" />
 			<exclude-mapping path="/demo/login" />
@@ -82,35 +85,38 @@
 
 	</interceptors>
 
-
- 
-
-
-
-
-
- <!-- 注册验证器 -->
-<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <beans:property name="basenames">
-            <beans:list>
-                <beans:value>classpath:ValidationMessages</beans:value>
-            </beans:list>
-        </beans:property>
-        <beans:property name="useCodeAsDefaultMessage" value="true" ></beans:property>
-        <beans:property name="fileEncodings" value="utf-8" ></beans:property>
-        
-    </beans:bean>
+ -->
 
 
 
 
 
-    <mvc:annotation-driven validator="validator" />
-    <beans:bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
-        <beans:property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
-        <!--这里配置将使用上面国际化配置的messageSource -->
-        <beans:property name="validationMessageSource" ref="messageSource" />
-    </beans:bean>
+
+	<!-- 注册验证器 -->
+	<beans:bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<beans:property name="basenames">
+			<beans:list>
+				<beans:value>classpath:ValidationMessages</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="useCodeAsDefaultMessage" value="true"></beans:property>
+		<beans:property name="fileEncodings" value="utf-8"></beans:property>
+
+	</beans:bean>
+
+
+
+
+
+	<mvc:annotation-driven validator="validator" />
+	<beans:bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<beans:property name="providerClass"
+			value="org.hibernate.validator.HibernateValidator" />
+		<!--这里配置将使用上面国际化配置的messageSource -->
+		<beans:property name="validationMessageSource" ref="messageSource" />
+	</beans:bean>
 
 
 

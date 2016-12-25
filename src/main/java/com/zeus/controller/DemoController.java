@@ -8,6 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -101,4 +104,7 @@ public class DemoController extends BaseController {
 		return resultOK(name);
 	}
 
+	
+	public static void main(String[] args) {
+		 ApplicationContext context= new ClassPathXmlApplicationContext(new String[]{"spring.xml","spring-mvc.xml","spring-mybatis.xml"}); 	}
 }

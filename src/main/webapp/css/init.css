@@ -1,0 +1,38 @@
+.init-content .body-nest {
+	padding: 5px;
+}
+
+.init-content .table {
+	margin-bottom: 0px;
+}
+
+.init-content .nest .title-alt {
+	margin: 8px auto 0;
+}
+
+.init-title .tittle-content-header {
+	line-height: 40px;
+}
+
+.paper-wrap {
+	padding: 3px;
+}
+
+#paper-top {
+	border-bottom: 0px;
+	background-color: #071219;
+}
+
+.w-circle-body,
+.server-info-body {
+	min-height: 370px;
+}
+
+#Info-CPU,
+#Info-RAM {
+	min-height: calc(100vh / 4 - 50px);
+}
+
+ul.topnav {
+	background-color: rgb(21, 45, 68);
+}
