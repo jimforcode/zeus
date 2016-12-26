@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeus.dao.ZeusHostMapper" >
+  <resultMap id="BaseResultMap" type="com.zeus.model.ZeusHost" >
+    <id column="host_id" property="hostId" jdbcType="INTEGER" />
+    <result column="agency_no" property="agencyNo" jdbcType="VARCHAR" />
+    <result column="agency_name" property="agencyName" jdbcType="VARCHAR" />
+    <result column="flow_no" property="flowNo" jdbcType="VARCHAR" />
+    <result column="host_type" property="hostType" jdbcType="VARCHAR" />
+    <result column="host_type_name" property="hostTypeName" jdbcType="VARCHAR" />
+    <result column="host_ip" property="hostIp" jdbcType="VARCHAR" />
+    <result column="host_name" property="hostName" jdbcType="VARCHAR" />
+    <result column="created_date" property="createdDate" jdbcType="DATE" />
+    <result column="modified_date" property="modifiedDate" jdbcType="DATE" />
+    <result column="created_user" property="createdUser" jdbcType="VARCHAR" />
+    <result column="modified_user" property="modifiedUser" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    host_id, agency_no, agency_name, flow_no, host_type, host_type_name, host_ip, host_name, 
+    created_date, modified_date, created_user, modified_user
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zeus_host
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zeus_host
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zeus.model.ZeusHost" >
+    insert into zeus_host (host_id, agency_no, agency_name, 
+      flow_no, host_type, host_type_name, 
+      host_ip, host_name, created_date, 
+      modified_date, created_user, modified_user
+      )
+    values (#{hostId,jdbcType=INTEGER}, #{agencyNo,jdbcType=VARCHAR}, #{agencyName,jdbcType=VARCHAR}, 
+      #{flowNo,jdbcType=VARCHAR}, #{hostType,jdbcType=VARCHAR}, #{hostTypeName,jdbcType=VARCHAR}, 
+      #{hostIp,jdbcType=VARCHAR}, #{hostName,jdbcType=VARCHAR}, #{createdDate,jdbcType=DATE}, 
+      #{modifiedDate,jdbcType=DATE}, #{createdUser,jdbcType=VARCHAR}, #{modifiedUser,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeus.model.ZeusHost" >
+    insert into zeus_host
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="hostId != null" >
+        host_id,
+      </if>
+      <if test="agencyNo != null" >
+        agency_no,
+      </if>
+      <if test="agencyName != null" >
+        agency_name,
+      </if>
+      <if test="flowNo != null" >
+        flow_no,
+      </if>
+      <if test="hostType != null" >
+        host_type,
+      </if>
+      <if test="hostTypeName != null" >
+        host_type_name,
+      </if>
+      <if test="hostIp != null" >
+        host_ip,
+      </if>
+      <if test="hostName != null" >
+        host_name,
+      </if>
+      <if test="createdDate != null" >
+        created_date,
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date,
+      </if>
+      <if test="createdUser != null" >
+        created_user,
+      </if>
+      <if test="modifiedUser != null" >
+        modified_user,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="hostId != null" >
+        #{hostId,jdbcType=INTEGER},
+      </if>
+      <if test="agencyNo != null" >
+        #{agencyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyName != null" >
+        #{agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="flowNo != null" >
+        #{flowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hostType != null" >
+        #{hostType,jdbcType=VARCHAR},
+      </if>
+      <if test="hostTypeName != null" >
+        #{hostTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostIp != null" >
+        #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=DATE},
+      </if>
+      <if test="createdUser != null" >
+        #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedUser != null" >
+        #{modifiedUser,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeus.model.ZeusHost" >
+    update zeus_host
+    <set >
+      <if test="agencyNo != null" >
+        agency_no = #{agencyNo,jdbcType=VARCHAR},
+      </if>
+      <if test="agencyName != null" >
+        agency_name = #{agencyName,jdbcType=VARCHAR},
+      </if>
+      <if test="flowNo != null" >
+        flow_no = #{flowNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hostType != null" >
+        host_type = #{hostType,jdbcType=VARCHAR},
+      </if>
+      <if test="hostTypeName != null" >
+        host_type_name = #{hostTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostIp != null" >
+        host_ip = #{hostIp,jdbcType=VARCHAR},
+      </if>
+      <if test="hostName != null" >
+        host_name = #{hostName,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null" >
+        created_date = #{createdDate,jdbcType=DATE},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=DATE},
+      </if>
+      <if test="createdUser != null" >
+        created_user = #{createdUser,jdbcType=VARCHAR},
+      </if>
+      <if test="modifiedUser != null" >
+        modified_user = #{modifiedUser,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeus.model.ZeusHost" >
+    update zeus_host
+    set agency_no = #{agencyNo,jdbcType=VARCHAR},
+      agency_name = #{agencyName,jdbcType=VARCHAR},
+      flow_no = #{flowNo,jdbcType=VARCHAR},
+      host_type = #{hostType,jdbcType=VARCHAR},
+      host_type_name = #{hostTypeName,jdbcType=VARCHAR},
+      host_ip = #{hostIp,jdbcType=VARCHAR},
+      host_name = #{hostName,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=DATE},
+      modified_date = #{modifiedDate,jdbcType=DATE},
+      created_user = #{createdUser,jdbcType=VARCHAR},
+      modified_user = #{modifiedUser,jdbcType=VARCHAR}
+    where host_id = #{hostId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -8,8 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.StringTokenizer;
-import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.zeus.dao.ZeusHostMapper;
 import com.zeus.dto.LocalHostDto;
 import com.zeus.dto.LocalHostResDto;
 import com.zeus.dto.ZeusHostDto;
@@ -24,6 +23,7 @@ import com.zeus.dto.ZeusHostGetReqDto;
 import com.zeus.dto.ZeusHostGetResDto;
 import com.zeus.dto.ZeusHostSaveReqDto;
 import com.zeus.dto.ZeusHostSaveResDto;
+import com.zeus.model.ZeusHost;
 import com.zeus.service.ZeusHostService;
 
 
@@ -96,22 +96,22 @@ public class ZeusHostServiceImpl implements ZeusHostService {
 	 * @param zeusHostSaveReqDto
 	 * @return
 	 */
-	public ZeusHostSaveResDto saveZeusHost(ZeusHostSaveReqDto zeusHostSaveReqDto) {
+	/*public ZeusHostSaveResDto saveZeusHost(ZeusHostSaveReqDto zeusHostSaveReqDto) {
 		ZeusHostSaveResDto zeusHostSaveResDto = new ZeusHostSaveResDto();
 		ZeusHost zeusHost = null;
 		for(ZeusHostDto zeusHostDto : zeusHostSaveReqDto.getZeusHostList()) {
-			zeusHost = this.getZeusHost(zeusHostDto.getHostId());
+			//zeusHost = this.getZeusHost(zeusHostDto.getHostId());
 			zeusHost.setAgencyNo(zeusHostDto.getAgencyNo());
 			zeusHost.setAgencyName(zeusHostDto.getAgencyName());
 			zeusHost.setHostType(zeusHostDto.getHostType());
-			zeusHost.setHsotIp(zeusHostDto.getHsotIp());
+			//zeusHost.setHsotIp(zeusHostDto.getHsotIp());
 			zeusHost.setHostName(zeusHostDto.getHostName());
 			zeusHost.setCreatedUser(zeusHostDto.getCreatedUser());
 			zeusHost.setModifiedUser(zeusHostDto.getModifiedUser());
 			this.saveOrUpdateZeusHost(zeusHost);
 		}
 		return zeusHostSaveResDto;
-	}
+	}*/
 	
 	/**
 	 * 根据主键查询主机信息
@@ -119,7 +119,7 @@ public class ZeusHostServiceImpl implements ZeusHostService {
 	 * @return
 	 */
 	private ZeusHost getZeusHost(Integer hostId){
-		return zeusHostMapper.selectByPrimaryKey();
+		return zeusHostMapper.selectByPrimaryKey(hostId);
 	}
 	
 	/**
@@ -127,10 +127,10 @@ public class ZeusHostServiceImpl implements ZeusHostService {
 	 * @param zeusHost
 	 * @return
 	 */
-	private int saveOrUpdateZeusHost(ZeusHost zeusHost) {
+	/*private int saveOrUpdateZeusHost(ZeusHost zeusHost) {
 		zeusHost.setModifiedDate(new Date());
 		if(null == zeusHost.getHostId()){
-			zeusHost.setIsDelete((short) 0);
+			//zeusHost.setIsDelete((short) 0);
 			zeusHost.setCreatedDate(new Date());
 			int hostId = zeusHostMapper.insertSelective(zeusHost);
 			return hostId;
@@ -139,7 +139,7 @@ public class ZeusHostServiceImpl implements ZeusHostService {
 			return zeusHost.getHostId();
 		}
 	}
-	
+	*/
 	/**
 	 * 获取主机信息
 	 * @param zeusHostGetReqDto
@@ -162,6 +162,12 @@ public class ZeusHostServiceImpl implements ZeusHostService {
 		}
 		zeusHostGetResDto.setZeusHostList(zeusHostDtoList);
 		return zeusHostGetResDto;
+	}
+
+	@Override
+	public ZeusHostSaveResDto saveZeusHost(ZeusHostSaveReqDto zeusHostSaveReqDto) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
