@@ -1,9 +1,11 @@
 package com.zeus.controller;
 
 import com.zeus.common.annotation.login.RequestAllowOirginRequired;
+import com.zeus.common.requestEnum.IORequestTypeEnum;
 import com.zeus.common.requestEnum.MemoryRequestTypeEnum;
-import com.zeus.dto.DiskInfoDto;
+import com.zeus.dto.IOInfoDto;
 import com.zeus.dto.MemoryInfoDto;
+import com.zeus.service.IOMonitorService;
 import com.zeus.service.MemoryMonitorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,29 +24,29 @@ import java.util.Map;
  * Created by Administrator on 2016/10/30 0030.
  */
 @Controller
-@RequestMapping("memory")
-public class MemoryMoitorController extends BaseController {
+@RequestMapping("io")
+public class IOMoitorController extends BaseController {
 
     @Autowired
-    MemoryMonitorService memoryMonitorService;
+    IOMonitorService ioMonitorService;
 
     /**
-     * 获取内存信息
+     * 获取IO信息
      *
      * @param request
      * @param response
      * @return
      */
-    @RequestMapping(value = "memoryInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "IOInfo", method = RequestMethod.GET)
     @RequestAllowOirginRequired
     @ResponseBody
-    public Map<String, Object> getMemoryInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName, @RequestParam(defaultValue = "10", required = false) String limit) {
+    public Map<String, Object> getIoInfo(HttpServletRequest request, HttpServletResponse response, @RequestParam("hostName") String hostName, @RequestParam(defaultValue = "10", required = false) String limit) {
 
-        List<MemoryInfoDto> result = null;
+        List<IOInfoDto> result = null;
         try {
-            result = doRequest(request, Arrays.asList(MemoryRequestTypeEnum.MEMORY_ALL.getCode().split(",")), MemoryRequestTypeEnum.MEMORY_ALL, hostName, Integer.valueOf(limit));
+            result = doRequest(request, Arrays.asList(IORequestTypeEnum.IO_ALL.getCode().split(",")), IORequestTypeEnum.IO_ALL, hostName, Integer.valueOf(limit));
         } catch (Exception e) {
-            logger.error("MemoryMoitorController getMemoryInfo exception=" + e);
+            logger.error("IOMoitorController getIoInfo exception=" + e);
             return resultError(e.getLocalizedMessage());
         }
         return resultOK(result);
@@ -57,22 +59,22 @@ public class MemoryMoitorController extends BaseController {
      * @param request
      * @return
      */
-    public List<MemoryInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, MemoryRequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
+    public List<IOInfoDto> doRequest(HttpServletRequest request, List<String> searchKeyList, IORequestTypeEnum requestTypeEnum, String hostName, Integer limit) throws Exception {
 
         // 参数检查
         isHostNameNull(hostName);
 
         // 1.获取auth
-        String auth = memoryMonitorService.getAuth(request);
+        String auth = ioMonitorService.getAuth(request);
 
         // 2.获取指定主机的hostId
-        String hostId = memoryMonitorService.getHostId(hostName, auth);
+        String hostId = ioMonitorService.getHostId(hostName, auth);
 
         // 3.获取该指定主机的监控项itemId
-        Map<String, String> itemIdMap = memoryMonitorService.getItemId(hostId, auth, searchKeyList);
+        Map<String, String> itemIdMap = ioMonitorService.getItemId(hostId, auth, searchKeyList);
 
         // 4.获取该监控项的监控数据
-        List<MemoryInfoDto> memoryInfoDtoList = memoryMonitorService.getDiskMonitorInfo(itemIdMap, auth, requestTypeEnum, limit);
+        List<IOInfoDto> memoryInfoDtoList = ioMonitorService.getIOMonitorInfo(itemIdMap, auth, requestTypeEnum, limit);
 
         return memoryInfoDtoList;
     }

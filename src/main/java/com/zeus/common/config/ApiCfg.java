@@ -26,7 +26,17 @@ public class ApiCfg {
 	@Value("#{configProperties['zabbix.host.port']}")
 	private String zabbixHostPort;
 
-	@Value("#{configProperties['zabbix.password']}")
+ 
+	@Value("#{configProperties['zabbix.hostname']}")
+	private String zabbixHostName;
+
+	public String getZabbixHostName() {
+		return zabbixHostName;
+	}
+
+	public void setZabbixHostName(String zabbixHostName) {
+		this.zabbixHostName = zabbixHostName;
+	}
 
 	public String getZabbixAuthUrl() {
 		return zabbixAuthUrl;

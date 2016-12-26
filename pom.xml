@@ -135,7 +135,6 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 		</dependency>
-
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
@@ -157,7 +156,47 @@
 			<artifactId>gson</artifactId>
 			<version>2.6.2</version>
 		</dependency>
-
+ 
+         <!-- 日志 -->
+        <!-- logback+slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.0</version>
+            <type>jar</type>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>0.9.28</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>0.9.28</version>
+            <type>jar</type>
+        </dependency>
+        <!-- zabbix -->
+        <dependency>
+            <groupId>io.github.hengyunabc</groupId>
+            <artifactId>zabbix-api</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <!-- snmp -->
+        <dependency>
+            <groupId>org.snmp4j</groupId>
+            <artifactId>snmp4j</artifactId>
+            <version>2.5.2</version>
+        </dependency>
+        <!-- sftp -->
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
+            <version>0.1.53</version>
+        </dependency>
+ 
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -165,33 +204,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- 日志 -->
-		<!-- logback+slf4j -->
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>1.6.0</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-core</artifactId>
-			<version>0.9.28</version>
-			<type>jar</type>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>0.9.28</version>
-			<type>jar</type>
-		</dependency>
-		<!-- zabbix -->
-		<dependency>
-			<groupId>io.github.hengyunabc</groupId>
-			<artifactId>zabbix-api</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+		 
 
 
 		<!-- use hibernate-validator to validate entity before enter controller -->
