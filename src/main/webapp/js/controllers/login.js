@@ -75,6 +75,6 @@ function loginCtrl($scope, $location, $base64) {
 		var pathname = window.location.pathname;
 		$scope.loginUser.userName = $scope.user.userId;
 		//window.location = pathname + '#/?p=' + $base64.encode(angular.toJson($scope.loginUser, false));
-		window.location ='http://localhost:8080/zeus/index.html#/app/menu/log'
+		window.location ='http://139.196.50.175:8080/zeus/index.html#/app/menu/log'
 	};
 };
